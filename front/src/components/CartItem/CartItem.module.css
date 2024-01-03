@@ -1,0 +1,127 @@
+.item {
+    position: relative;
+    width: 100%;
+    display: flex;
+    min-height: 150px;
+    column-gap: 15px;
+}
+
+.clothPreview {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #F0EEED;
+    border-radius: 10px;
+    width: 150px;
+}
+
+.clothPreview img {
+    width: 80%;
+    height: 80%;
+}
+
+.description {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: calc(100% - 165px);
+}
+
+.deleteButton {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.deleteButton svg {
+    fill: #FF3333;
+    transition: all 0.3s ease;
+}
+
+.deleteButton:hover svg {
+    fill: black;
+}
+
+.name a {
+    position: relative;
+    text-decoration: none;
+    color: black;
+    font-size: 1.1rem;
+}
+
+.name {
+    width: calc(100% - 25px);
+}
+
+.name a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    height: 1px;
+    width: 100%;
+    background-color: black;
+    transform: scaleX(0);
+    transition: all 0.3s;
+}
+
+.name a:hover::after {
+    transform: scaleX(1);
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    row-gap: 8px;
+}
+
+.size,
+.color {
+    font-size: 0.9rem;
+}
+
+.size span,
+.color span {
+    color: rgba(0, 0, 0, 0.6);
+}
+
+.total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.price {
+    font-size: 1.2rem;
+}
+
+.count {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 10px;
+    padding: 10px 15px;
+    border-radius: 10px;
+    background-color: #F0F0F0;
+}
+
+.count input {
+    background-color: transparent;
+    max-width: 40px;
+    text-align: center;
+    outline: none;
+}
+
+
+.count button {
+    width: 13px;
+    height: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.count button:hover svg {
+    transform: scale(1.5);
+    transition: .3s;
+}

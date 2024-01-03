@@ -1,0 +1,101 @@
+.autentificationForm {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 40px;
+    min-height: 330px;
+}
+
+.formButtons {
+    display: flex;
+    column-gap: 30px;
+}
+
+.formButton {
+    font-size: 1.2rem;
+    border-bottom: 1px solid transparent;
+}
+
+.formButton.active {
+    border-bottom: 1px solid gray;
+    transition: .3s;
+}
+
+.autentificationForm form {
+    position: absolute;
+    top: 60px;
+    display: flex;
+    opacity: 0;
+    visibility: hidden;
+    min-width: 250px;
+    max-width: 400px;
+    flex-direction: column;
+    row-gap: 30px;
+}
+
+.autentificationForm form.active {
+    opacity: 1;
+    visibility: visible;
+    transition: 1s ease;
+}
+
+.autentificationForm form h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.submitButton {
+    background-color: black;
+    color: white;
+    padding: 10px 25px;
+    border-radius: 20px;
+}
+
+.formInput {
+    position: relative;
+    padding: 5px 15px;
+    background-color: transparent;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.inputBar {
+    position: relative;
+}
+
+.inputText {
+    position: absolute;
+    top: 4px;
+    font-size: 0.9rem;
+    left: 15px;
+    z-index: -3;
+    transition: .3s;
+}
+
+.formInput {
+    width: 100%;
+}
+
+.formInput:focus {
+    outline: none;
+}
+
+.formInput:focus~.inputText,
+.inputText.active {
+    top: -15px;
+    font-size: 0.8rem;
+    color: rgba(0, 0, 0, 0.6);
+}
+
+.showHidePassword {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    right: 0;
+    top: 6px;
+}
+
+.showHidePassword img {
+    width: 20px;
+}

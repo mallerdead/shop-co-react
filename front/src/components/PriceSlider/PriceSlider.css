@@ -1,0 +1,48 @@
+.horizontal-slider {
+    width: 100%;
+    height: 40px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.horizontal-slider .example-track {
+    height: 4px;
+}
+
+.example-track.example-track-0,
+.example-track.example-track-2 {
+    background: #F0F0F0;
+    border-radius: 2px;
+}
+
+.example-track.example-track-1 {
+    background: black;
+    border-radius: 2px;
+}
+
+.horizontal-slider .example-thumb {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 50%;
+    width: 27px;
+    height: 27px;
+    line-height: 38px;
+    transform: translate(-1px, -50%);
+    border-radius: 50%;
+    background-color: black;
+    color: white;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.btn-value {
+    color: black;
+    position: absolute;
+    text-wrap: nowrap;
+    bottom: -35px;
+    font-weight: 600;
+    font-size: 0.9rem;
+}

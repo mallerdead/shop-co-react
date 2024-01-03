@@ -1,0 +1,56 @@
+.item {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    text-decoration: none;
+    color: black;
+}
+
+.name {
+    font-size: 1.1rem;
+}
+
+.clothPreview {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 250px;
+    height: 250px;
+    background-color: #F0EEED;
+    border-radius: 10px;
+}
+
+.clothPreview img {
+    width: 70%;
+    height: 70%;
+}
+
+.rating {
+    display: flex;
+    align-items: center;
+    column-gap: 5px;
+}
+
+.fullPrice {
+    display: flex;
+    align-items: center;
+    column-gap: 15px;
+}
+
+.price {
+    font-size: 1.2rem;
+}
+
+.oldPrice {
+    font-size: 1.2rem;
+    text-decoration: line-through;
+    color: rgba(0, 0, 0, 0.4);
+}
+
+.discount {
+    background-color: rgba(255, 51, 51, 0.1);
+    color: #FF3333;
+    font-size: 0.6rem;
+    padding: 4px 7px;
+    border-radius: 50px;
+}

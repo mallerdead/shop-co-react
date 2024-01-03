@@ -1,0 +1,27 @@
+.filter {
+    display: flex;
+    flex-direction: column;
+    row-gap: 15px;
+}
+
+.title {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.2rem;
+}
+
+.filterContent {
+
+    display: none;
+    gap: 8px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.5s ease;
+}
+
+.filterContent.active {
+    visibility: visible;
+    opacity: 1;
+    display: flex;
+    flex-wrap: wrap;
+}

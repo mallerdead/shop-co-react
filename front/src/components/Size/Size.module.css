@@ -1,0 +1,13 @@
+.size {
+    background-color: #F0F0F0;
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 0.8rem;
+    padding: 10px 18px;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+}
+
+.size.active {
+    background-color: black;
+    color: white;
+}
