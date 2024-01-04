@@ -1,29 +1,27 @@
 ﻿using shopCO.Models;
+using shopCO.DB;
 using Microsoft.AspNetCore.Mvc;
 
 namespace shopCO.Controllers
 {
     public class Clothes : Controller
     {
-        List<Cloth> _clothes = new List<Cloth>()
-        {
-            new Cloth {},
-            new Cloth {},
-            new Cloth {},
-            new Cloth {},
-            new Cloth {},
-        };
-
+        DBContext dbContext = new DBContext();
         public IActionResult Index()
         {
             return View();
         }
 
         [HttpGet, Route("clothes")]
-        public string GetClothes()
+        public IActionResult GetClothes()
         {
-            return "test";
+            return Ok(dbContext.GetClothList());
         }
 
+        [HttpGet, Route("clothes/{id}")]
+        public IActionResult GetClothesById(int id)
+        {
+            return Ok(dbContext.FindClothById(id));
+        }
     }
 }
