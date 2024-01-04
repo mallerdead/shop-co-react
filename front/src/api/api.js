@@ -160,12 +160,12 @@ const DUMMY_CLOTHES = [
 ]
 
 export const getClothes = () => {
-  test()
   return DUMMY_CLOTHES
 }
 
-export const getClothesById = (id) => {
-  return DUMMY_CLOTHES.find((cloth) => cloth.id === id)
+export const getClothesById = async (id) => {
+  const response = await axios.get(`https://localhost:7001/clothes/${id}`)
+  return response.data
 }
 
 export const getTopSelling = () => {

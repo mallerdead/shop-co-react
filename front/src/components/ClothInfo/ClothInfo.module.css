@@ -1,186 +1,190 @@
 .clothInfo {
-    display: flex;
-    column-gap: 40px;
+  display: flex;
+  column-gap: 40px;
 }
 
 .clothGalery {
-    display: flex;
-    column-gap: 30px;
+  display: flex;
+  column-gap: 30px;
 }
 
 .allImage {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    max-height: 100%;
-    row-gap: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  max-height: 100%;
+  row-gap: 10px;
 }
 
 .imageButton {
-    width: 140px;
-    border-radius: 10px;
-    background-color: #F0EEED;
-    border: 1px solid transparent;
-    transition: all 0.2s ease;
+  width: 140px;
+  border-radius: 10px;
+  background-color: #f0eeed;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
 }
 
 .imageButton.active {
-    border: 1px solid black;
+  border: 1px solid black;
 }
 
 .imageButton img {
-    width: 90%;
-    height: 90%;
+  width: 90%;
+  height: 90%;
 }
 
 .currentImage {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #F0EEED;
-    border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f0eeed;
+  border-radius: 20px;
 }
 
 .cloth {
-    display: flex;
-    flex-direction: column;
-    row-gap: 15px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 15px;
+}
+
+.clothColors {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .cloth .name {
-    font-size: 1.3rem;
+  font-size: 1.3rem;
 }
 
 .cloth .rating {
-    display: flex;
-    column-gap: 15px;
+  display: flex;
+  column-gap: 15px;
 }
 
 .cloth .rating .maxRating {
-    color: rgba(0, 0, 0, 0.6);
+  color: rgba(0, 0, 0, 0.6);
 }
 
 .fullPrice {
-    display: flex;
-    align-items: center;
-    column-gap: 15px;
+  display: flex;
+  align-items: center;
+  column-gap: 15px;
 }
 
 .price {
-    font-size: 1.2rem;
+  font-size: 1.2rem;
 }
 
 .oldPrice {
-    font-size: 1.2rem;
-    text-decoration: line-through;
-    color: rgba(0, 0, 0, 0.4);
+  font-size: 1.2rem;
+  text-decoration: line-through;
+  color: rgba(0, 0, 0, 0.4);
 }
 
 .discount {
-    background-color: rgba(255, 51, 51, 0.1);
-    color: #FF3333;
-    font-size: 0.6rem;
-    padding: 4px 7px;
-    border-radius: 50px;
+  background-color: rgba(255, 51, 51, 0.1);
+  color: #ff3333;
+  font-size: 0.6rem;
+  padding: 4px 7px;
+  border-radius: 50px;
 }
 
 .delimiter {
-    width: 100%;
-    height: 1px;
-    background-color: rgba(0, 0, 0, 0.1);
+  width: 100%;
+  height: 1px;
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
 .description {
-    font-size: 0.9rem;
-    color: rgba(0, 0, 0, 0.6);
+  font-size: 0.9rem;
+  color: rgba(0, 0, 0, 0.6);
 }
 
 .colors {
-    display: flex;
-    flex-direction: column;
-    row-gap: 15px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 15px;
 }
 
 .colors .title {
-    font-size: 0.9rem;
-    color: rgba(0, 0, 0, 0.6);
+  font-size: 0.9rem;
+  color: rgba(0, 0, 0, 0.6);
 }
 
 .sizes {
-    display: flex;
-    flex-direction: column;
-    row-gap: 15px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 15px;
 }
 
 .sizes .title {
-    font-size: 0.9rem;
-    color: rgba(0, 0, 0, 0.6);
+  font-size: 0.9rem;
+  color: rgba(0, 0, 0, 0.6);
 }
 
 .clothSizes {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .cartInfo {
-    display: flex;
-    column-gap: 20px;
+  display: flex;
+  column-gap: 20px;
 }
 
 .count {
-    display: flex;
-    align-items: center;
-    column-gap: 5px;
-    padding: 5px 10px;
-    max-width: 150px;
-    border-radius: 20px;
-    background-color: #F0F0F0;
+  display: flex;
+  align-items: center;
+  column-gap: 5px;
+  padding: 5px 10px;
+  max-width: 150px;
+  border-radius: 20px;
+  background-color: #f0f0f0;
 }
 
 .count input {
-    text-align: center;
-    min-width: calc(100% - 58px);
-    background-color: transparent;
-    padding: 2px 5px;
-    outline: none;
+  text-align: center;
+  min-width: calc(100% - 58px);
+  background-color: transparent;
+  padding: 2px 5px;
+  outline: none;
 }
 
 .count button {
-    width: 24px;
-    height: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .addCartButton {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: black;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 20px;
-    width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: black;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 20px;
+  width: 100%;
 }
 
 @media (max-width: 1040px) {
-    .clothInfo {
-        flex-direction: column;
-        row-gap: 30px;
-    }
+  .clothInfo {
+    flex-direction: column;
+    row-gap: 30px;
+  }
 
-    .clothGalery {
-        flex-direction: column-reverse;
-        row-gap: 20px;
-    }
+  .clothGalery {
+    flex-direction: column-reverse;
+    row-gap: 20px;
+  }
 
-    .allImage {
-        flex-direction: row;
-        justify-content: flex-start;
-        column-gap: 30px;
-    }
-
-
+  .allImage {
+    flex-direction: row;
+    justify-content: flex-start;
+    column-gap: 30px;
+  }
 }
