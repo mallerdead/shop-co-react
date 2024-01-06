@@ -1,41 +1,54 @@
 .clothesPages {
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 20px 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 0;
+  column-gap: 10px;
 }
 
-.clothesPages .prev,
-.clothesPages .next {
-    display: flex;
-    column-gap: 8px;
-    padding: 10px 20px;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    transition: all 0.3s ease;
+.prev,
+.next {
+  display: flex;
+  column-gap: 8px;
+  padding: 10px 20px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  transition: all 0.3s ease;
 }
 
-.clothesPages .prev:hover,
-.clothesPages .next:hover {
-    background-color: rgba(0, 0, 0, 0.1);
+.prev:hover,
+.next:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.prev.disabled,
+.next.disabled {
+  opacity: 0.9;
+  cursor: auto;
+}
+
+.prev.disabled:hover,
+.next.disabled:hover {
+  background-color: transparent;
 }
 
 .pagesButtons {
-    display: flex;
-    column-gap: 10px;
+  display: flex;
+  column-gap: 10px;
 }
 
-.pagesButtons button {
-    padding: 10px 15px;
-    border-radius: 8px;
-    color: rgba(0, 0, 0, 0.5);
-    background-color: white;
-    transition: all 0.3s ease;
+.pagesButton {
+  padding: 8px 15px;
+  min-width: 40px;
+  border-radius: 8px;
+  color: rgba(0, 0, 0, 0.5);
+  background-color: white;
+  transition: all 0.3s ease;
 }
 
-.pagesButtons button:hover,
-.pagesButtons button.active {
-    background-color: rgba(0, 0, 0, 0.1);
-    color: black;
+.pagesButton:hover,
+.pagesButton.active {
+  background-color: rgba(0, 0, 0, 0.1);
+  color: black;
 }

@@ -120,52 +120,19 @@ const DUMMY_CLOTHES = [
     sizes: [{ id: 9, size: '4X-Large' }],
     color: { id: 1, colorName: 'white' },
   },
-  {
-    id: 10,
-    name: 'Polo with Tipping Details',
-    description:
-      'This graphic t-shirt which is perfect for any occasion. Crafted from a soft and breathable fabric, it offers superior comfort and style.',
-    price: 180,
-    rating: 4.5,
-    imageLink: 'poloTipping.png',
-    sizes: [{ id: 9, size: '4X-Large' }],
-    color: { id: 1, colorName: 'white' },
-  },
-  {
-    id: 11,
-    name: 'Black Striped T-shirt',
-    description:
-      'This graphic t-shirt which is perfect for any occasion. Crafted from a soft and breathable fabric, it offers superior comfort and style.',
-    price: 120,
-    discount: 30,
-    oldPrice: 150,
-    rating: 5.0,
-    imageLink: 'blackStrippedShirt.png',
-    sizes: [{ id: 9, size: '4X-Large' }],
-    color: { id: 1, colorName: 'white' },
-  },
-  {
-    id: 12,
-    name: 'Skinny Fit Jeans',
-    description:
-      'This graphic t-shirt which is perfect for any occasion. Crafted from a soft and breathable fabric, it offers superior comfort and style.',
-    price: 240,
-    oldPrice: 260,
-    discount: 20,
-    rating: 3.5,
-    imageLink: 'skinnyFitJeans.png',
-    sizes: [{ id: 9, size: '4X-Large' }],
-    color: { id: 1, colorName: 'white' },
-  },
 ]
 
-export const getClothes = () => {
-  return DUMMY_CLOTHES
+export const getClothes = async () => {
+  return axios.get(`https://localhost:7001/clothes`).then((response) => response.data)
 }
 
 export const getClothesById = async (id) => {
   const response = await axios.get(`https://localhost:7001/clothes/${id}`)
   return response.data
+}
+
+export const register = async (data) => {
+  return await axios.post(`https://localhost:7001/register`, data)
 }
 
 export const getTopSelling = () => {
@@ -211,9 +178,4 @@ export const checkToken = () => {
 
 export const getUser = () => {
   return { id: 1, name: 'maller', email: 'maller@me.com', password: '1234' }
-}
-
-const test = async () => {
-  const response = await axios.get('https://localhost:7001/clothes')
-  return response.data
 }

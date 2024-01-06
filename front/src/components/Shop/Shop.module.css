@@ -1,231 +1,230 @@
 .shop {
-    position: relative;
-    display: flex;
-    column-gap: 30px;
-    align-items: flex-start;
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
-    padding-top: 30px;
+  position: relative;
+  display: flex;
+  column-gap: 30px;
+  align-items: flex-start;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  padding-top: 30px;
 }
 
 .clothesTypes {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    row-gap: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  row-gap: 10px;
 }
 
 .clothesType {
-    font-size: 1rem;
-    color: rgba(0, 0, 0, 0.6);
+  font-size: 1rem;
+  color: rgba(0, 0, 0, 0.6);
 }
 
 .filters {
-    display: flex;
-    flex-direction: column;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    padding: 30px;
-    row-gap: 20px;
-    width: 270px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding: 30px;
+  row-gap: 20px;
+  width: 270px;
 }
 
 .filters .title {
-    display: flex;
-    justify-content: space-between;
-    font-size: 1.2rem;
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.2rem;
 }
 
 .delimiter {
-    width: 100%;
-    min-height: 1px;
-    background-color: rgba(0, 0, 0, 0.1);
+  width: 100%;
+  min-height: 1px;
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
 .colors {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .applyFilter {
-    border-radius: 30px;
-    background-color: black;
-    color: white;
-    padding: 15px 15px;
-    margin-top: 20px;
+  border-radius: 30px;
+  background-color: black;
+  color: white;
+  padding: 15px 15px;
+  margin-top: 20px;
 }
 
 .filterSize {
-    display: flex;
-    flex-direction: column;
-    row-gap: 15px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 15px;
 }
 
 .filterSize .title {
-    display: flex;
-    justify-content: space-between;
-    font-size: 1.2rem;
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.2rem;
 }
 
 .styles {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    row-gap: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  row-gap: 10px;
 }
 
 .styles button {
-    color: rgba(0, 0, 0, 0.6);
-    font-size: 1rem;
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 1rem;
 }
 
 .sortButton {
-    display: flex;
-    column-gap: 5px;
-    align-items: center;
+  display: flex;
+  column-gap: 5px;
+  align-items: center;
 }
 
 .clothesWrapper {
-    display: flex;
-    flex-direction: column;
-    row-gap: 40px;
-    width: calc(100% - 310px);
+  display: flex;
+  flex-direction: column;
+  row-gap: 40px;
+  width: calc(100% - 310px);
 }
 
 .clothes {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 30px;
-    min-height: 500px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  min-height: 500px;
 }
 
 .clothesTitle {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .clothesTitle {
-    font-size: 1.5rem;
+  font-size: 1.5rem;
 }
 
 .sortClothes {
-    display: flex;
-    column-gap: 5px;
-    align-items: center;
+  display: flex;
+  column-gap: 5px;
+  align-items: center;
 }
 
 .sortClothes span {
-    color: rgba(0, 0, 0, 0.6);
+  color: rgba(0, 0, 0, 0.6);
 }
 
 .sortClothes span,
 .sortClothes button {
-    font-size: 0.7rem;
-    padding-inline: 0;
-    padding-block: 0;
+  font-size: 0.7rem;
+  padding-inline: 0;
+  padding-block: 0;
 }
 
 .filterMenuButton {
-    background-color: #F0F0F0;
-    margin-left: 10px;
-    display: none;
-    width: 30px;
-    height: 30px;
-    border-radius: 20px;
-    transition: all 0.5s ease;
+  background-color: #f0f0f0;
+  margin-left: 10px;
+  display: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 20px;
+  transition: all 0.5s ease;
 }
 
 .filterMenuButton:hover {
-    background-color: black;
+  background-color: black;
 }
 
 .filterMenuButton svg path {
-    transition: all 0.5s ease;
+  transition: all 0.5s ease;
 }
 
 .filterMenuButton:hover svg path {
-    fill: white;
+  fill: white;
 }
 
 @media (max-width: 960px) {
-    .filterMenuButton {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
+  .filterMenuButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
-    .clothesWrapper {
-        width: 100%;
-    }
+  .clothesWrapper {
+    width: 100%;
+  }
 
-    .modal {
-        position: fixed;
-        z-index: 1000;
-        opacity: 0;
-        visibility: hidden;
-        top: 0;
-        left: 0;
-        background-color: rgba(0, 0, 0, 0.6);
-        width: 100vw;
-        height: 100%;
-        transition: all 0.6s ease;
-    }
+  .modal {
+    position: fixed;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    width: 100vw;
+    height: 100%;
+    transition: all 0.6s ease;
+  }
 
-    .modal.active {
-        visibility: visible;
-        opacity: 1;
-    }
+  .modal.active {
+    visibility: visible;
+    opacity: 1;
+  }
 
-    .filters {
-        background-color: white;
-        position: fixed;
-        row-gap: 10px;
-        top: 50px;
-        left: 0;
-        width: 100%;
-        padding: 30px 50px;
-        height: 0;
-        overflow-y: scroll;
-        height: calc(100% - 50px);
-        border-radius: 0;
-        transform: perspective(600px) rotateX(70deg) translate(0, -200px);
-        opacity: 0.5;
-        border-top-right-radius: 30px;
-        border-top-left-radius: 30px;
-        transition: all 0.5s ease;
-    }
+  .filters {
+    background-color: white;
+    position: fixed;
+    row-gap: 10px;
+    top: 50px;
+    left: 0;
+    width: 100%;
+    padding: 30px 50px;
+    height: 0;
+    overflow-y: scroll;
+    height: calc(100% - 50px);
+    border-radius: 0;
+    transform: perspective(600px) rotateX(70deg) translate(0, -200px);
+    opacity: 0.5;
+    border-top-right-radius: 30px;
+    border-top-left-radius: 30px;
+    transition: all 0.5s ease;
+  }
 
-    .filters.active {
-        opacity: 1;
-        transform: perspective(600px) rotateX(0) translate(0, 0);
-    }
+  .filters.active {
+    opacity: 1;
+    transform: perspective(600px) rotateX(0) translate(0, 0);
+  }
 
-    .closeModal {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 30px;
-        height: 30px;
-    }
+  .closeModal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+  }
 
-    .closeModal:hover svg path {
-        fill-opacity: 1;
-        transition: all 0.3s ease;
-    }
+  .closeModal:hover svg path {
+    fill-opacity: 1;
+    transition: all 0.3s ease;
+  }
 }
 
 @media (max-width: 630px) {
-    .clothes {
-        justify-content: center;
-    }
+  .clothes {
+    justify-content: center;
+  }
 
-    .clothesTitle h4 {
-        font-size: 1.2rem;
-    }
+  .clothesTitle h4 {
+    font-size: 1.2rem;
+  }
 
-    .sortButton {
-        display: none;
-    }
+  .sortButton {
+    display: none;
+  }
 }

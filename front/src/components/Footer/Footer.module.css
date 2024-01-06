@@ -1,229 +1,233 @@
 .footer {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    padding-top: 130px;
-    margin-top: 130px;
-    row-gap: 40px;
-    background-color: #F0F0F0;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding-top: 130px;
+  margin-top: 130px;
+  row-gap: 40px;
+  background-color: #f0f0f0;
 }
 
 .latestOffers {
-    position: absolute;
-    background-color: black;
-    display: flex;
-    top: 0;
-    left: 50%;
-    column-gap: 20px;
-    width: calc(100% - 200px);
-    transform: translate(-50%, -50%);
-    justify-content: space-between;
-    align-items: center;
-    padding: 30px;
-    border-radius: 20px;
+  position: absolute;
+  background-color: black;
+  display: flex;
+  top: 0;
+  left: 50%;
+  column-gap: 20px;
+  width: calc(100% - 200px);
+  transform: translate(-50%, -50%);
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px;
+  border-radius: 20px;
 }
 
 .latestOffers .text {
-    color: white;
-    font-size: 2rem;
-    font-weight: 600;
-    max-width: 500px;
+  color: white;
+  font-size: 2rem;
+  font-weight: 600;
+  max-width: 500px;
 }
 
 .userMail {
-    display: flex;
-    flex-direction: column;
-    min-width: 250px;
-    row-gap: 30px;
+  display: flex;
+  flex-direction: column;
+  min-width: 250px;
+  row-gap: 30px;
 }
 
 .mailBar {
-    position: relative;
-    width: inherit;
+  position: relative;
+  width: inherit;
 }
 
 .mailBar input {
-    width: 100%;
-    padding: 10px 10px 10px 43px;
+  width: 100%;
+  padding: 10px 10px 10px 43px;
 }
 
 .mailBar input::placeholder {
-    font-size: 0.8rem;
+  font-size: 0.8rem;
 }
 
 .mailBar img {
-    position: absolute;
-    top: 50%;
-    left: 12px;
-    transform: translate(0, -50%);
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  transform: translate(0, -50%);
 }
-
 
 .userMail input,
 .userMail button {
-    border-radius: 20px;
+  border-radius: 20px;
 }
 
 .userMail button {
-    background-color: white;
-    font-size: 0.9rem;
-    font-weight: 600;
-    padding: 10px;
+  background-color: white;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 10px;
+  color: black;
 }
 
 .usefulLinks {
-    display: flex;
-    gap: 30px;
+  display: flex;
+  gap: 30px;
 }
 
 .linksWrapper {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    gap: 30px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
 }
 
 .siteInfo {
-    display: flex;
-    flex-direction: column;
-    row-gap: 20px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
 }
 
 .siteInfo .logo {
-    font-size: 1.5rem;
-    font-weight: 600;
+  font-size: 1.5rem;
+  font-weight: 600;
 }
 
 .siteInfo .text {
-    max-width: 280px;
-    color: rgba(0, 0, 0, 0.6);
+  max-width: 280px;
+  color: rgba(0, 0, 0, 0.6);
 }
 
 .socialNetwork {
-    display: flex;
-    column-gap: 10px;
+  display: flex;
+  column-gap: 10px;
 }
 
 .usefulLinks .links .link {
-    color: rgba(0, 0, 0, 0.6);
-    font-size: 0.7rem;
-    text-wrap: nowrap;
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 0.7rem;
+  text-wrap: nowrap;
 }
 
 .titleLinks {
-    font-size: 0.9rem;
+  font-size: 0.9rem;
 }
 
 .usefulLinks .links {
-    display: flex;
-    flex-direction: column;
-    row-gap: 10px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
 }
 
 .footerCopyright {
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    row-gap: 20px;
-    padding: 30px 0 50px 2px;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  row-gap: 20px;
+  padding: 30px 0 50px 2px;
 }
 
 .copyright {
-    font-size: 0.8rem;
+  font-size: 0.8rem;
 }
 
 .badges {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    flex-wrap: wrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
 @media (max-width: 1100px) {
-    .latestOffers {
-        width: calc(100% - 100px);
-    }
+  .latestOffers {
+    width: calc(100% - 100px);
+  }
 }
 
 @media (max-width: 830px) {
-    .footer {
-        padding-top: 140px;
-    }
+  .footer {
+    padding-top: 140px;
+  }
 
-    .latestOffers {
-        flex-direction: column;
-        row-gap: 30px;
-        padding: 20px;
-    }
+  .latestOffers {
+    flex-direction: column;
+    row-gap: 30px;
+    padding: 20px;
+  }
 
-    .latestOffers .text {
-        max-width: inherit;
-        font-size: 1.5rem;
-    }
+  .latestOffers .text {
+    max-width: inherit;
+    font-size: 1.5rem;
+  }
 
-    .userMail {
-        width: calc(100%);
-        min-width: 148px;
-    }
+  .userMail {
+    width: calc(100%);
+    min-width: 148px;
+  }
 
-    .siteInfo .text {
-        max-width: 100%;
-        color: rgba(0, 0, 0, 0.6);
-    }
+  .siteInfo .text {
+    max-width: 100%;
+    color: rgba(0, 0, 0, 0.6);
+  }
 
+  .usefulLinks {
+    flex-direction: column;
+  }
 
-    .usefulLinks {
-        flex-direction: column;
-    }
+  .linksWrapper {
+    flex-wrap: wrap;
+  }
 
-    .linksWrapper {
-        flex-wrap: wrap;
-    }
-
-    .links {
-        min-width: 125px;
-    }
+  .links {
+    min-width: 125px;
+  }
 }
 
 @media (max-width: 680px) {
-    .footerCopyright {
-        padding: 20px 0 30px 0;
-        flex-direction: column;
-    }
+  .footerCopyright {
+    padding: 20px 0 30px 0;
+    flex-direction: column;
+  }
 
-    .userMail,
-    .latestOffers {
-        row-gap: 15px;
-    }
+  .userMail,
+  .latestOffers {
+    row-gap: 15px;
+  }
 }
 
-@media (max-width:510px) {
-    .latestOffers .text {
-        font-size: 1.1rem;
-    }
+@media (max-width: 510px) {
+  .latestOffers .text {
+    font-size: 1.1rem;
+  }
 
+  .userMail button {
+    font-size: 0.7rem;
+  }
 
-    .userMail button {
-        font-size: 0.7rem;
-    }
+  .mailBar img {
+    width: 18px;
+  }
 
-    .mailBar img {
-        width: 18px;
-    }
+  .mailBar input {
+    padding: 8px 8px 8px 35px;
+  }
 
-    .mailBar input {
-        padding: 8px 8px 8px 35px;
-    }
+  .userMail button {
+    padding: 7px;
+  }
 
-    .userMail button {
-        padding: 7px;
-    }
+  .mailBar input,
+  .mailBar input::placeholder,
+  .userMail button {
+    font-size: 0.6rem;
+  }
+}
 
-    .mailBar input,
-    .mailBar input::placeholder,
-    .userMail button {
-        font-size: 0.6rem;
-    }
+@media (max-width: 420px) {
+  .latestOffers {
+    width: calc(100% - 30px);
+  }
 }
