@@ -4,19 +4,26 @@ using shopCO.Data.Models;
 
 namespace shopCO.Controllers
 {
+    
     public class UsersController : Controller
     {
-        AppDbContext dbContext = new AppDbContext();
+        private readonly AppDbContext DBContext;
+        private readonly IConfiguration Config;
+
+        public UsersController(AppDbContext DBContext, IConfiguration Config)
+        {
+            this.DBContext = DBContext;
+            this.Config = Config;
+        }
 
         [HttpPost, Route("register")]
-        public IActionResult Register([FromBody] RegisterViewModel registerModel)
+        public async Task<IActionResult> Register([FromBody] RegisterViewModel registerModel)
         {
-            if (!dbContext.CheckUserByEMail(registerModel.Email))
+            if (!await DBContext.CheckUserByEMail(registerModel.Email))
             {
-                var token = dbContext.CreateUser(registerModel);
-                return Ok(token);
+                var test = await DBContext.CreateUser(registerModel, Config);
+                return Ok(test);
             }
-
             return Conflict("User already exist");
         }
     }

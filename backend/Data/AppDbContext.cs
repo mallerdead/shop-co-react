@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using shopCO.Data.Models;
-using shopCO.PasswordHashing;
 
 namespace shopCO.Data
 {
@@ -12,11 +11,6 @@ namespace shopCO.Data
         public virtual DbSet<ClothSize> ClothSize { get; set; }
         public virtual DbSet<Color> Colors { get; set; }
         public virtual DbSet<ClothColor> ClothColors { get; set; }
-
-        public AppDbContext()
-        {
-
-        }
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
@@ -59,13 +53,20 @@ namespace shopCO.Data
                 entity.ToTable("clothsizes");
             });
 
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+                entity.ToTable("users");
+            });
+
             OnModelCreatingPartial(modelBuilder);
         }
 
         public async Task<ClothDTO> FindClothById(int id)
         {
             var cloth = await Clothes.Include(cloth => cloth.ClothColors).ThenInclude(clothColor => clothColor.Color).Include(cloth => cloth.ClothSizes).ThenInclude(clothSize => clothSize.Size).FirstOrDefaultAsync(cloth => cloth.Id == id);
-            ClothDTO clothDTO = null;
+            ClothDTO? clothDTO = null;
 
             if (cloth != null)
             {
@@ -80,17 +81,24 @@ namespace shopCO.Data
             return clothesList;
         }
 
-        public string CreateUser(RegisterViewModel registerModel)
+        public async Task<string> CreateUser(RegisterViewModel registerViewModel, IConfiguration config)
         {
-            var passwordHash = PasswordHasher.HashPassword(registerModel.Password);
-            return passwordHash;
+            var newUser = new User(registerViewModel);
+
+            Users.Add(newUser);
+            await SaveChangesAsync();
+
+            var token = JwtTokensManager.JwtTokensManager.GenerateToken(newUser.Id, config);
+            //newUser.Token = token;
+            //await SaveChangesAsync();
+
+            return token;
         }
 
-        public bool CheckUserByEMail(string Email)
+        public async Task<bool> CheckUserByEMail(string Email)
         {
-            return true;
+            var user = await Users.FirstOrDefaultAsync(user => user.Email == Email);
+            return user != null;
         }
-
-        
     }
 }
