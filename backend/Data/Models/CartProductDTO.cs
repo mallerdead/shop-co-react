@@ -1,0 +1,30 @@
+﻿using System.Security.Cryptography.X509Certificates;
+
+namespace shopCO.Data.Models
+{
+    public class CartProductDTO
+    {
+        public int Id { get; set; }
+        public int ClothId { get; set; }
+        public string Name { get; set; }
+        public string ImageURL { get; set; }
+        public float Price { get; set; }
+        public int Discount { get; set; }
+        public int Count { get; set; }
+        public string Color { get; set; }
+        public string Size { get; set; }
+
+        public CartProductDTO(CartProduct product)
+        {
+            Id = product.Id;
+            ClothId = product.ClothId;
+            Name = product.Cloth.Name;
+            ImageURL = product.Cloth.ImageURL;
+            Price = product.Cloth.Price;
+            Discount = product.Cloth.Discount;
+            Count = product.Count;
+            Color = product.Color.Name;
+            Size = product.Size.Name;
+        }
+    }
+}

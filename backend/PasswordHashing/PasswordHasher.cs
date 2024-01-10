@@ -4,7 +4,7 @@ namespace shopCO.PasswordHashing
 {
     public static class PasswordHasher
     {
-        private static HashType Algorithm = HashType.SHA256;
+        private static readonly HashType Algorithm = HashType.SHA256;
         public static string HashPassword(string password)
         {
             return BCrypt.Net.BCrypt.HashPassword(password, BCrypt.Net.BCrypt.GenerateSalt(), true, Algorithm);

@@ -9,10 +9,7 @@ namespace shopCO.Controllers
     {
         private readonly AppDbContext DBContext;
 
-        public ClothesController(AppDbContext DBContext)
-        {
-            this.DBContext = DBContext;
-        }
+        public ClothesController(AppDbContext DBContext) => this.DBContext = DBContext;
 
         [HttpGet, Route("clothes")]
         public async Task<IActionResult> GetClothes()

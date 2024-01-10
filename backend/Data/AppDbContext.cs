@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using shopCO.JwtTokens;
+using shopCO.PasswordHashing;
 using shopCO.Data.Models;
 
 namespace shopCO.Data
@@ -11,6 +13,8 @@ namespace shopCO.Data
         public virtual DbSet<ClothSize> ClothSize { get; set; }
         public virtual DbSet<Color> Colors { get; set; }
         public virtual DbSet<ClothColor> ClothColors { get; set; }
+        public virtual DbSet<Cart> Carts { get; set; }
+        public virtual DbSet<CartProduct> CartProducts { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
@@ -88,11 +92,50 @@ namespace shopCO.Data
             Users.Add(newUser);
             await SaveChangesAsync();
 
-            var token = JwtTokensManager.JwtTokensManager.GenerateToken(newUser.Id, config);
-            //newUser.Token = token;
-            //await SaveChangesAsync();
+            Carts.Add(new Cart(newUser.Id));
+
+            var token = JwtTokensManager.GenerateToken(newUser.Id, config);
+            newUser.Token = token;
+            await SaveChangesAsync();
 
             return token;
+        }
+
+        public async Task<UserInfoViewModel> FindUserByToken(string token)
+        {
+            var user = await Users.FirstOrDefaultAsync(user => user.Token != null && user.Token == token);
+            return user != null ? new UserInfoViewModel(user) : null;
+        }
+
+        public async Task<List<CartProductDTO>> FindCartProducts(string token)
+        {
+            var user = await Users
+                .Include(user => user.Cart.Products).ThenInclude(product => product.Cloth)
+                .Include(user => user.Cart.Products).ThenInclude(product => product.Color)
+                .Include(user => user.Cart.Products).ThenInclude(product => product.Size)
+                .FirstOrDefaultAsync(user => user.Token == token);
+
+            if (user != null)
+            {
+                var products = user.Cart.Products.ConvertAll(product => new CartProductDTO(product));
+                return products;
+            }
+
+            return null;
+        }
+
+        public async Task<string> UserLogin(LoginViewModel loginViewModel, IConfiguration config)
+        {
+            var user = await Users.FirstOrDefaultAsync(user => user.Email == loginViewModel.Login || user.Login == loginViewModel.Login);
+
+            if (user != null && PasswordHasher.CheckHashedPassword(loginViewModel.Password, user.PasswordHash))
+            {
+                user.Token = JwtTokensManager.GenerateToken(user.Id, config);
+                await SaveChangesAsync();
+                return user.Token;
+            }
+
+            return null;
         }
 
         public async Task<bool> CheckUserByEMail(string Email)

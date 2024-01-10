@@ -4,7 +4,6 @@ using shopCO.Data.Models;
 
 namespace shopCO.Controllers
 {
-    
     public class UsersController : Controller
     {
         private readonly AppDbContext DBContext;
@@ -16,15 +15,39 @@ namespace shopCO.Controllers
             this.Config = Config;
         }
 
+        [HttpGet, Route("user")]
+        public async Task<IActionResult> GetUser([FromHeader(Name = "Authorization")] string header)
+        {
+            if (!string.IsNullOrEmpty(header) && header.StartsWith("Jwt "))
+            {
+                var userInfoViewModel = await DBContext.FindUserByToken(header[4..]);
+
+                if (userInfoViewModel != null)
+                {
+                    return Ok(userInfoViewModel);
+                }
+            }
+
+            return Unauthorized("There is no user with this token");
+        }
+
         [HttpPost, Route("register")]
         public async Task<IActionResult> Register([FromBody] RegisterViewModel registerModel)
         {
             if (!await DBContext.CheckUserByEMail(registerModel.Email))
             {
-                var test = await DBContext.CreateUser(registerModel, Config);
-                return Ok(test);
+                var token = await DBContext.CreateUser(registerModel, Config);
+                return Ok(token);
             }
+
             return Conflict("User already exist");
+        }
+
+        [HttpPost, Route("login")]
+        public async Task<IActionResult> Login([FromBody] LoginViewModel loginViewModel)
+        {
+            string token = await DBContext.UserLogin(loginViewModel, Config);
+            return token != null ? Ok(token) : NotFound("User does not exist");
         }
     }
 }
