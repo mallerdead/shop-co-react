@@ -1,10 +1,11 @@
 import { useState } from 'react'
-import { register } from '/src/api/api'
+import { register, login } from '/src/api/api'
 import styles from './AutentificationForm.module.css'
 
-export const AutentificationForm = () => {
+export const AutentificationForm = ({ setHasToken }) => {
   const [isSignUpActive, setSignUpActive] = useState(true)
   const [isShowPassword, setIsShowPassword] = useState(false)
+
   const [signUpData, setSignUpData] = useState({
     login: '',
     email: '',
@@ -14,34 +15,29 @@ export const AutentificationForm = () => {
     login: '',
     password: '',
   })
-  const changeLoginSingUp = (e) => {
-    setSignUpData((prev) => ({ ...prev, login: e.target.value }))
-  }
-  const changeEmailSingUp = (e) => {
-    setSignUpData((prev) => ({ ...prev, email: e.target.value }))
-  }
-  const changePasswordSingUp = (e) => {
-    setSignUpData((prev) => ({ ...prev, password: e.target.value }))
-  }
 
-  const changeLoginSingIn = (e) => {
-    setSignInData((prev) => ({ ...prev, login: e.target.value }))
-  }
-  const changePasswordSingIn = (e) => {
-    setSignInData((prev) => ({ ...prev, password: e.target.value }))
-  }
+  const changeLoginSingUp = (e) => setSignUpData((prev) => ({ ...prev, login: e.target.value }))
+  const changeEmailSingUp = (e) => setSignUpData((prev) => ({ ...prev, email: e.target.value }))
+  const changePasswordSingUp = (e) => setSignUpData((prev) => ({ ...prev, password: e.target.value }))
 
-  const toggleShowPassword = () => {
-    setIsShowPassword((prev) => !prev)
-  }
+  const changeLoginSingIn = (e) => setSignInData((prev) => ({ ...prev, login: e.target.value }))
+  const changePasswordSingIn = (e) => setSignInData((prev) => ({ ...prev, password: e.target.value }))
+
+  const toggleShowPassword = () => setIsShowPassword((prev) => !prev)
 
   const signUpSubmit = (e) => {
     e.preventDefault()
-    register(signUpData).then((response) => console.log(response.data))
+    register(signUpData).then((token) => {
+      document.cookie = `token=${token}; path=/;`
+      setHasToken(true)
+    })
   }
   const singInSubmit = (e) => {
     e.preventDefault()
-    console.log(signInData)
+    login(signInData).then((token) => {
+      document.cookie = `token=${token}; path=/;`
+      setHasToken(true)
+    })
   }
 
   return (

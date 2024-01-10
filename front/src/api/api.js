@@ -127,12 +127,15 @@ export const getClothes = async () => {
 }
 
 export const getClothesById = async (id) => {
-  const response = await axios.get(`https://localhost:7001/clothes/${id}`)
-  return response.data
+  return await axios.get(`https://localhost:7001/clothes/${id}`).then((response) => response.data)
 }
 
 export const register = async (data) => {
-  return await axios.post(`https://localhost:7001/register`, data)
+  return await axios.post(`https://localhost:7001/register`, data).then((response) => response.data)
+}
+
+export const login = async (data) => {
+  return axios.post(`https://localhost:7001/login`, data).then((response) => response.data)
 }
 
 export const getTopSelling = () => {
@@ -151,31 +154,26 @@ export const getNewArrivals = () => {
   return result
 }
 
-export const getCartItems = () => {
-  const result = []
-  for (let i = 0; i < 4; i++) {
-    const item = DUMMY_CLOTHES[Math.floor(Math.random() * DUMMY_CLOTHES.length)]
-    const resultItem = {
-      id: i,
-      clothId: item.id,
-      size: item.sizes[0].size,
-      quantity: 1,
-      imageLink: item.imageLink,
-      name: item.name,
-      price: item.price,
-      oldPrice: item.oldPrice,
-      discount: item.discount,
-      color: item.color.colorName,
-    }
-    result.push(resultItem)
+export const getUserInfo = async () => {
+  const token = document.cookie.split('=')[1]
+  if (!token) {
+    throw new Error('No token provided')
   }
-  return result
+  return await axios.get('https://localhost:7001/user', {
+    headers: {
+      Authorization: `Jwt ${token}`,
+    },
+  })
 }
 
-export const checkToken = () => {
-  return false
-}
+export const getCart = async () => {
+  const token = document.cookie.split('=')[1]
 
-export const getUser = () => {
-  return { id: 1, name: 'maller', email: 'maller@me.com', password: '1234' }
+  return await axios
+    .get(`https://localhost:7001/cart`, {
+      headers: {
+        Authorization: `Jwt ${token}`,
+      },
+    })
+    .then((response) => response.data)
 }

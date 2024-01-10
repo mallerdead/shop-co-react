@@ -60,8 +60,10 @@ export const ClothInfo = ({ cloth }) => {
           </div>
         </div>
         <div className={styles.fullPrice}>
-          <div className={styles.price}>${cloth.price}</div>
-          <div className={styles.oldPrice}>{cloth.discount ? `$${cloth.oldPrice}` : ''}</div>
+          <div className={styles.price}>
+            ${cloth.discount ? (cloth.price * (1 - cloth.discount / 100)).toFixed(2) : cloth.price}
+          </div>
+          <div className={styles.oldPrice}>{cloth.discount ? `$${cloth.price}` : ''}</div>
           {cloth.discount ? <div className={styles.discount}>-{cloth.discount}%</div> : ''}
         </div>
         <div className={styles.description}>{cloth.description}</div>
