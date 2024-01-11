@@ -20,11 +20,11 @@ namespace shopCO.Controllers
         {
             if (!string.IsNullOrEmpty(header) && header.StartsWith("Jwt "))
             {
-                var userInfoViewModel = await DBContext.FindUserByToken(header[4..]);
+                var user = await DBContext.FindUserByToken(header[4..]);
 
-                if (userInfoViewModel != null)
+                if (user != null)
                 {
-                    return Ok(userInfoViewModel);
+                    return Ok(new UserInfoViewModel(user));
                 }
             }
 

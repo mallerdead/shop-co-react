@@ -1,0 +1,11 @@
+.notices {
+  position: absolute;
+  z-index: 1111;
+  left: 0;
+  margin-top: 10px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 10px;
+}

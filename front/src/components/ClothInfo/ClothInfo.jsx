@@ -1,8 +1,10 @@
 import styles from './ClothInfo.module.css'
 import { Star, Color, Size } from '..'
+import { addCartProductToCart } from '../../api/api'
 import { useState } from 'react'
+import { v4 as uuidv4 } from 'uuid'
 
-export const ClothInfo = ({ cloth }) => {
+export const ClothInfo = ({ cloth, addNotice }) => {
   const [images, setImages] = useState([
     { id: 1, isActive: true, imageLink: cloth.imageURL },
     { id: 2, isActive: false, imageLink: cloth.imageURL },
@@ -12,20 +14,35 @@ export const ClothInfo = ({ cloth }) => {
   const [sizes, setSizes] = useState(cloth.sizes.map((size, index) => ({ ...size, isActive: index === 0 })))
   const [count, setCount] = useState(1)
 
-  const toggleSize = (id) => {
-    setSizes((prev) => prev.map((size) => ({ ...size, isActive: size.id === id })))
-  }
+  const toggleSize = (id) => setSizes((prev) => prev.map((size) => ({ ...size, isActive: size.id === id })))
 
-  const toggleColor = (id) => {
-    setColors((prev) => prev.map((size) => ({ ...size, isActive: size.id === id })))
-  }
+  const toggleColor = (id) => setColors((prev) => prev.map((color) => ({ ...color, isActive: color.id === id })))
 
-  const toggleActiveImage = (id) => {
-    setImages((prev) => prev.map((image) => ({ ...image, isActive: image.id === id })))
-  }
+  const toggleActiveImage = (id) => setImages((prev) => prev.map((image) => ({ ...image, isActive: image.id === id })))
+
   const handleInputChange = (e) => {
     const inputValue = e.target.value
     setCount(inputValue)
+  }
+
+  const handleAddToCart = () => {
+    addCartProductToCart({
+      clothId: cloth.id,
+      sizeId: sizes.find((size) => size.isActive).id,
+      colorId: colors.find((color) => color.isActive).id,
+      count: count,
+    }).then((status) => {
+      if (status === 201) {
+        addNotice(uuidv4(), 'Cloth added', `${cloth.name} added to cart`, 'ok')
+      } else if (status === 200) {
+        addNotice(
+          uuidv4(),
+          'Cloth count increased',
+          `${cloth.name} are already in your cart so their quantity has been increased by ${count}`,
+          'ok',
+        )
+      }
+    })
   }
 
   const rating = new Array(Math.floor(cloth.rating)).fill(null)
@@ -118,7 +135,9 @@ export const ClothInfo = ({ cloth }) => {
               <img src='src/assets/plus.svg' alt='' />
             </button>
           </div>
-          <button className={styles.addCartButton}>Add to Cart</button>
+          <button className={styles.addCartButton} onClick={handleAddToCart}>
+            Add to Cart
+          </button>
         </div>
       </div>
     </div>

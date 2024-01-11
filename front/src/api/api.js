@@ -135,7 +135,7 @@ export const register = async (data) => {
 }
 
 export const login = async (data) => {
-  return axios.post(`https://localhost:7001/login`, data).then((response) => response.data)
+  return await axios.post(`https://localhost:7001/login`, data).then((response) => response.data)
 }
 
 export const getTopSelling = () => {
@@ -152,6 +152,45 @@ export const getNewArrivals = () => {
     result.push(DUMMY_CLOTHES[Math.floor(Math.random() * DUMMY_CLOTHES.length)])
   }
   return result
+}
+
+export const addCartProductToCart = async (product) => {
+  const token = document.cookie.split('=')[1]
+  if (!token) {
+    throw new Error('No token provided')
+  }
+  return await axios
+    .post(`https://localhost:7001/cart/products/add`, product, {
+      headers: {
+        Authorization: `Jwt ${token}`,
+      },
+    })
+    .then((response) => response.status)
+}
+
+export const removeProductFromCart = async (product) => {
+  const token = document.cookie.split('=')[1]
+  if (!token) {
+    throw new Error('No token provided')
+  }
+  return await axios
+    .post(`https://localhost:7001/cart/products/remove`, product, {
+      headers: {
+        Authorization: `Jwt ${token}`,
+      },
+    })
+    .then((response) => response.data)
+}
+
+export const changeCountInCart = async (product) => {
+  const token = document.cookie.split('=')[1]
+  if (!token) {
+    throw new Error('No token provided')
+  }
+
+  return await axios
+    .post(`https://localhost:7001/cart/products/change-count`, product, { headers: { Authorization: `Jwt ${token}` } })
+    .then((response) => response.status)
 }
 
 export const getUserInfo = async () => {

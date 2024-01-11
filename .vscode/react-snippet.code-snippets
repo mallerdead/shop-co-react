@@ -1,0 +1,7 @@
+{
+  "connecting styles": {
+    "prefix": "ims",
+    "body": ["import styles from './${TM_FILENAME_BASE}.module.css'", "$2"],
+    "description": "Import module.css"
+  }
+}

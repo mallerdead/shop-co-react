@@ -1,4 +1,6 @@
-﻿namespace shopCO.Data.Models
+﻿using shopCO.Data.Models.Entities;
+
+namespace shopCO.Data.Models
 {
     public class ClothSize
     {

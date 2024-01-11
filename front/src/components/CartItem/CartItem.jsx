@@ -1,18 +1,17 @@
 import { useEffect, useRef, useState } from 'react'
 import styles from './CartItem.module.css'
 
-export const CartItem = ({ cloth, deleteHandler, changeQuantity }) => {
-  const [count, setCount] = useState(cloth.count)
-  const countInput = useRef()
+export const CartItem = ({ product, productCount, deleteHandler, changeQuantity }) => {
+  const [inputCount, setInputCount] = useState(productCount)
 
   useEffect(() => {
-    const onlyNumbers = count.toString().replace(/[^0-9]/g, '')
-    changeQuantity(cloth.clothId, onlyNumbers)
-  }, [count])
+    setInputCount(productCount)
+  }, [productCount])
+
   return (
     <div className={styles.item}>
       <div className={styles.clothPreview}>
-        <img src={`/src/assets/${cloth.imageURL}`} alt='' />
+        <img src={`/src/assets/${product.imageURL}`} alt='' />
       </div>
       <div className={styles.description}>
         <button className={styles.deleteButton} onClick={deleteHandler}>
@@ -22,23 +21,22 @@ export const CartItem = ({ cloth, deleteHandler, changeQuantity }) => {
         </button>
         <div className={styles.wrapper}>
           <div className={styles.name}>
-            <a href={`cloth?id=${cloth.clothId}`}>{cloth.name}</a>
+            <a href={`cloth?id=${product.clothId}`}>{product.name}</a>
           </div>
           <div className={styles.size}>
-            Size: <span>{cloth.size}</span>
+            Size: <span>{product.size.name}</span>
           </div>
           <div className={styles.color}>
-            Color: <span>{cloth.color}</span>
+            Color: <span>{product.color.name}</span>
           </div>
         </div>
         <div className={styles.total}>
-          <div className={styles.price}>${cloth.price}</div>
+          <div className={styles.price}>${product.price}</div>
           <div className={styles.count}>
             <button
               className={styles.decrement}
               onClick={() => {
-                countInput.current.focus()
-                setCount((prev) => (prev > 1 ? --prev : prev))
+                changeQuantity(product.id, inputCount - 1)
               }}
             >
               <svg xmlns='http://www.w3.org/2000/svg' width='17' height='17' viewBox='0 0 17 17' fill='black'>
@@ -47,21 +45,18 @@ export const CartItem = ({ cloth, deleteHandler, changeQuantity }) => {
             </button>
             <input
               type='text'
-              value={count}
-              onChange={(e) => setCount(e.target.value)}
-              ref={countInput}
-              onBlur={() =>
-                setCount((prev) => {
-                  const onlyNumbers = prev.toString().replace(/[^0-9]/g, '')
-                  return onlyNumbers ? onlyNumbers : 1
-                })
-              }
+              value={inputCount}
+              onChange={(e) => setInputCount(e.target.value)}
+              onBlur={() => {
+                let onlyNumbers = +inputCount.toString().replace(/[^0-9]/g, '')
+                setInputCount(onlyNumbers)
+                changeQuantity(product.id, onlyNumbers)
+              }}
             />
             <button
               className={styles.increment}
               onClick={() => {
-                countInput.current.focus()
-                setCount((prev) => ++prev)
+                changeQuantity(product.id, inputCount + 1)
               }}
             >
               <svg xmlns='http://www.w3.org/2000/svg' width='13' height='13' viewBox='0 0 13 13' fill='black'>

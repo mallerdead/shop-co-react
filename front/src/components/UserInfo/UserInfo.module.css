@@ -1,41 +1,41 @@
 .user {
-    display: flex;
-    flex-direction: column;
-    row-gap: 20px;
-    max-width: 300px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+  max-width: 300px;
 }
 
 .userRow {
-    display: flex;
-    align-items: center;
-    column-gap: 10px;
+  display: flex;
+  align-items: center;
+  column-gap: 10px;
 }
 
 .title {
-    min-width: 100px;
-    color: rgba(0, 0, 0, 0.6);
+  min-width: 100px;
+  color: rgba(0, 0, 0, 0.6);
 }
 
 .value {
-    display: flex;
-    align-items: center;
-    column-gap: 5px;
+  display: flex;
+  align-items: center;
+  column-gap: 5px;
 }
 
 .value input {
-    padding: 5px 20px;
-    font-size: 1rem;
-    background-color: transparent;
+  padding: 5px 20px;
+  font-size: 1rem;
+  background-color: transparent;
 }
 
 .editButton {
-    width: 24px;
-    height: 24px;
+  width: 24px;
+  height: 24px;
 }
 
 .changePassword {
-    padding: 10px 20px;
-    background-color: black;
-    color: white;
-    border-radius: 20px;
+  padding: 10px 20px;
+  background-color: black;
+  color: white;
+  border-radius: 20px;
 }

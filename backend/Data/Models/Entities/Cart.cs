@@ -1,4 +1,4 @@
-﻿namespace shopCO.Data.Models
+﻿namespace shopCO.Data.Models.Entities
 {
     public class Cart
     {

@@ -1,19 +1,20 @@
 import styles from './UserPage.module.css'
-import { AutentificationForm, LoadingSpinner, UserInfo } from '..'
+import { AutentificationForm, LoadingSpinner, ModalNotices, UserInfo } from '..'
 import { useEffect, useState } from 'react'
+
 import { getUserInfo } from '/src/api/api'
 
 export const UserPage = () => {
+  const [notices, setNotices] = useState([])
   const [user, setUser] = useState()
   const [isLoading, setIsLoading] = useState(true)
   const [hasToken, setHasToken] = useState(false)
 
-  const changeName = (newName) => {
-    setUser((prev) => ({ ...prev, name: newName }))
-  }
-  const changeEmail = (newEmail) => {
-    setUser((prev) => ({ ...prev, email: newEmail }))
-  }
+  const addNotice = (id, title, description, state) =>
+    setNotices((prev) => [...prev, { id, title, description, state }])
+
+  const changeName = (newName) => setUser((prev) => ({ ...prev, name: newName }))
+  const changeEmail = (newEmail) => setUser((prev) => ({ ...prev, email: newEmail }))
 
   useEffect(() => {
     setIsLoading(true)
@@ -32,15 +33,11 @@ export const UserPage = () => {
       setIsLoading(true)
       getUserInfo()
         .then((response) => {
-          if (response.status === 200) {
-            setUser(response.data)
-          } else {
-            document.cookie = 'token=test; path=/;'
-            setHasToken(false)
-          }
+          setUser(response.data)
+          setIsLoading(false)
         })
-        .then(() => setIsLoading(false))
         .catch(() => {
+          setHasToken(false)
           document.cookie = 'token=; path=/;'
           setIsLoading(false)
         })
@@ -48,13 +45,14 @@ export const UserPage = () => {
   }, [hasToken])
   return (
     <div className='container'>
+      <ModalNotices notices={notices} setNotices={setNotices} />
       <div className={styles.userPage}>
         {isLoading ? (
           <LoadingSpinner />
         ) : hasToken && user ? (
           <UserInfo user={user} changeName={changeName} changeEmail={changeEmail} />
         ) : (
-          <AutentificationForm setHasToken={setHasToken} />
+          <AutentificationForm setHasToken={setHasToken} setIsLoading={setIsLoading} addNotice={addNotice} />
         )}
       </div>
     </div>

@@ -1,7 +1,5 @@
 ﻿using shopCO.Data;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using shopCO.Data.Models;
 
 namespace shopCO.Controllers
 {

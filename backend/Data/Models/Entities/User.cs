@@ -1,4 +1,5 @@
-﻿using shopCO.PasswordHashing;
+﻿using shopCO.Data.Models.Entities;
+using shopCO.PasswordHashing;
 
 namespace shopCO.Data.Models
 {

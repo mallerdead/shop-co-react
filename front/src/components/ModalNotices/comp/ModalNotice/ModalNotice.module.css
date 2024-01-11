@@ -1,0 +1,46 @@
+.notice {
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+  min-width: 350px;
+  max-width: 400px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  animation: 1.6s newNotice;
+}
+
+.notice.ok {
+  background-color: rgb(159, 244, 159);
+  color: black;
+}
+.notice.error {
+  background-color: red;
+  color: white;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+.description {
+  font-size: 0.9rem;
+}
+
+@keyframes newNotice {
+  0% {
+    visibility: hidden;
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  20%,
+  80% {
+    visibility: visible;
+    opacity: 1;
+    transform: translateX(0px);
+  }
+  100% {
+    visibility: hidden;
+    opacity: 0;
+    transform: translateX(50px);
+  }
+}

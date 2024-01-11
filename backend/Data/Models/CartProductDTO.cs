@@ -1,4 +1,5 @@
 ﻿using System.Security.Cryptography.X509Certificates;
+using shopCO.Data.Models.Entities;
 
 namespace shopCO.Data.Models
 {
@@ -11,8 +12,8 @@ namespace shopCO.Data.Models
         public float Price { get; set; }
         public int Discount { get; set; }
         public int Count { get; set; }
-        public string Color { get; set; }
-        public string Size { get; set; }
+        public Color Color { get; set; }
+        public Size Size { get; set; }
 
         public CartProductDTO(CartProduct product)
         {
@@ -23,8 +24,8 @@ namespace shopCO.Data.Models
             Price = product.Cloth.Price;
             Discount = product.Cloth.Discount;
             Count = product.Count;
-            Color = product.Color.Name;
-            Size = product.Size.Name;
+            Color = product.Color;
+            Size = product.Size;
         }
     }
 }

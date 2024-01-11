@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { register, login } from '/src/api/api'
 import styles from './AutentificationForm.module.css'
+import { v4 as uuidv4 } from 'uuid'
 
-export const AutentificationForm = ({ setHasToken }) => {
+export const AutentificationForm = ({ setHasToken, setIsLoading, addNotice }) => {
   const [isSignUpActive, setSignUpActive] = useState(true)
   const [isShowPassword, setIsShowPassword] = useState(false)
 
@@ -27,17 +28,35 @@ export const AutentificationForm = ({ setHasToken }) => {
 
   const signUpSubmit = (e) => {
     e.preventDefault()
-    register(signUpData).then((token) => {
-      document.cookie = `token=${token}; path=/;`
-      setHasToken(true)
-    })
+    register(signUpData)
+      .then((token) => {
+        document.cookie = `token=${token}; path=/;`
+        addNotice(uuidv4(), 'Successfully registered', 'You have successfully registered', 'ok')
+        setHasToken(true)
+      })
+      .catch((err) => {
+        if (err.response.status === 409) {
+          addNotice(uuidv4(), 'Error', err.response.data, 'error')
+        } else {
+          console.error(err)
+        }
+      })
   }
   const singInSubmit = (e) => {
     e.preventDefault()
-    login(signInData).then((token) => {
-      document.cookie = `token=${token}; path=/;`
-      setHasToken(true)
-    })
+    login(signInData)
+      .then((token) => {
+        document.cookie = `token=${token}; path=/;`
+        setHasToken(true)
+        addNotice(uuidv4(), 'Successfully authorized', 'You have successfully logged in to your account', 'ok')
+      })
+      .catch((err) => {
+        if (err.response.status === 404) {
+          addNotice(uuidv4(), 'Error', err.response.data, 'error')
+        } else {
+          console.error(err)
+        }
+      })
   }
 
   return (
@@ -61,33 +80,42 @@ export const AutentificationForm = ({ setHasToken }) => {
         <h4>Create Account</h4>
         <div className={styles.inputBar}>
           <input
+            id='login-sign-up'
             className={styles.formInput}
             type='text'
             value={signUpData.login}
             onChange={changeLoginSingUp}
             required
           />
-          <div className={`${styles.inputText} ${signUpData.login ? styles.active : ''}`}>Login</div>
+          <label for='login-sign-up' className={`${styles.inputText} ${signUpData.login ? styles.active : ''}`}>
+            Login
+          </label>
         </div>
         <div className={styles.inputBar}>
           <input
+            id='email-sign-up'
             className={styles.formInput}
             type='email'
             value={signUpData.email}
             onChange={changeEmailSingUp}
             required
           />
-          <div className={`${styles.inputText} ${signUpData.email ? styles.active : ''}`}>Email Address</div>
+          <label for='email-sign-up' className={`${styles.inputText} ${signUpData.email ? styles.active : ''}`}>
+            Email Address
+          </label>
         </div>
         <div className={styles.inputBar}>
           <input
+            id='password-sign-up'
             className={styles.formInput}
             type={isShowPassword ? 'text' : 'password'}
             value={signUpData.password}
             onChange={changePasswordSingUp}
             required
           />
-          <div className={`${styles.inputText} ${signUpData.password ? styles.active : ''}`}>Password</div>
+          <label for='password-sign-up' className={`${styles.inputText} ${signUpData.password ? styles.active : ''}`}>
+            Password
+          </label>
           <button className={styles.showHidePassword} type='button' onClick={toggleShowPassword}>
             <img src={`/src/assets/${isShowPassword ? 'show' : 'hide'}password.svg`} alt='' />
           </button>
@@ -100,23 +128,29 @@ export const AutentificationForm = ({ setHasToken }) => {
         <h4>Sign in</h4>
         <div className={styles.inputBar}>
           <input
+            id='login-sign-in'
             className={styles.formInput}
             type='text'
             value={signInData.login}
             onChange={changeLoginSingIn}
             required
           />
-          <div className={`${styles.inputText} ${signInData.login ? styles.active : ''}`}>Login or Email</div>
+          <label for='login-sign-in' className={`${styles.inputText} ${signInData.login ? styles.active : ''}`}>
+            Login or Email
+          </label>
         </div>
         <div className={styles.inputBar}>
           <input
+            id='password-sign-in'
             className={styles.formInput}
             type={isShowPassword ? 'text' : 'password'}
             value={signInData.password}
             onChange={changePasswordSingIn}
             required
           />
-          <div className={`${styles.inputText} ${signInData.password ? styles.active : ''}`}>Password</div>
+          <label for='password-sign-in' className={`${styles.inputText} ${signInData.password ? styles.active : ''}`}>
+            Password
+          </label>
           <button className={styles.showHidePassword} type='button' onClick={toggleShowPassword}>
             <img src={`/src/assets/${isShowPassword ? 'show' : 'hide'}password.svg`} alt='' />
           </button>
