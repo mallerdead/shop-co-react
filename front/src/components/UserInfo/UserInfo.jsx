@@ -1,37 +1,44 @@
 import { useRef, useState } from 'react'
+
 import styles from './UserInfo.module.css'
 
-export const UserInfo = ({ user, changeName, changeEmail }) => {
+export const UserInfo = ({ user, changeName, changeEmail, setHasToken }) => {
   const [name, setName] = useState(user.login)
   const [email, setEmail] = useState(user.email)
+
   const nameInput = useRef()
   const emailInput = useRef()
+  const logoutHandler = () => {
+    document.cookie = 'token=; path=/;'
+    setHasToken(false)
+  }
 
   return (
     <div className={styles.user}>
+      <div className={styles.userTitle}>
+        <h4>Your profile</h4>
+        <button className={styles.exitButton} onClick={logoutHandler}>
+          <img src='/src/assets/exit.svg' alt='Exit button' />
+        </button>
+      </div>
+
       <div className={styles.userRow}>
         <span className={styles.title}>Name:</span>
         <div className={styles.value}>
-          <input
-            type='text'
-            value={name}
-            ref={nameInput}
-            onChange={(e) => setName(e.target.value)}
-            onBlur={(e) => {
+          <input type='text' value={name} ref={nameInput} onChange={(e) => setName(e.target.value)} disabled />
+          <button
+            className={styles.editButton}
+            onClick={() => {
               if (!name) {
                 setName(user.login)
               } else if (name !== user.login) {
                 changeName(name)
               }
-              e.target.disabled = !e.target.disabled
-            }}
-            disabled
-          />
-          <button
-            className={styles.editButton}
-            onClick={() => {
+
               nameInput.current.disabled = !nameInput.current.disabled
-              nameInput.current.focus()
+              if (!nameInput.current.disabled) {
+                nameInput.current.focus()
+              }
             }}
           >
             <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='black'>
@@ -43,27 +50,20 @@ export const UserInfo = ({ user, changeName, changeEmail }) => {
       <div className={styles.userRow}>
         <span className={styles.title}>Email:</span>
         <span className={styles.value}>
-          <input
-            type='email'
-            value={email}
-            ref={emailInput}
-            onChange={(e) => setEmail(e.target.value)}
-            onBlur={(e) => {
+          <input type='email' ref={emailInput} value={email} onChange={(e) => setEmail(e.target.value)} disabled />
+          <button
+            className={styles.editButton}
+            onClick={() => {
               if (!email) {
                 setEmail(user.email)
               }
               if (email !== user.email) {
                 changeEmail(email)
               }
-              e.target.disabled = !e.target.disabled
-            }}
-            disabled
-          />
-          <button
-            className={styles.editButton}
-            onClick={() => {
               emailInput.current.disabled = !emailInput.current.disabled
-              emailInput.current.focus()
+              if (!emailInput.current.disabled) {
+                emailInput.current.focus()
+              }
             }}
           >
             <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='black'>

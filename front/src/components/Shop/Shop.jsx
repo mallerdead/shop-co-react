@@ -7,10 +7,10 @@ export const Shop = () => {
   const [filterMenu, setFilterMenu] = useState(false)
   const [allClothes, setAllClothes] = useState([])
   const [clothes, setClothes] = useState([])
-  const [rangePrice, setRangePrice] = useState([0, 100])
+  const [rangePrice, setRangePrice] = useState([0, 0])
   const [isLoading, setIsLoading] = useState(true)
   const [currentPage, setCurrentPage] = useState(1)
-  const [clothesPerPage] = useState(9)
+  const [clothesPerPage] = useState(20)
   const [filterColors, setFilterColors] = useState([])
   const [filterSizes, setFilterSizes] = useState([])
   const [showFilters, setShowFilters] = useState([

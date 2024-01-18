@@ -31,18 +31,25 @@ export const ClothInfo = ({ cloth, addNotice }) => {
       sizeId: sizes.find((size) => size.isActive).id,
       colorId: colors.find((color) => color.isActive).id,
       count: count,
-    }).then((status) => {
-      if (status === 201) {
-        addNotice(uuidv4(), 'Cloth added', `${cloth.name} added to cart`, 'ok')
-      } else if (status === 200) {
-        addNotice(
-          uuidv4(),
-          'Cloth count increased',
-          `${cloth.name} are already in your cart so their quantity has been increased by ${count}`,
-          'ok',
-        )
-      }
     })
+      .then((status) => {
+        if (status === 201) {
+          addNotice(uuidv4(), 'Cloth added', `${cloth.name} added to cart`, 'ok')
+        } else if (status === 200) {
+          addNotice(
+            uuidv4(),
+            'Cloth count increased',
+            `${cloth.name} are already in your cart so their quantity has been increased by ${count}`,
+            'ok',
+          )
+        }
+      })
+      .catch((err) => {
+        if (err.code != null && err.code === 'ERR_NETWORK') {
+          addNotice(uuidv4(), 'Network error', 'Please check your internet connection', 'error')
+        }
+        addNotice(uuidv4(), '')
+      })
   }
 
   const rating = new Array(Math.floor(cloth.rating)).fill(null)
@@ -50,6 +57,7 @@ export const ClothInfo = ({ cloth, addNotice }) => {
   if (cloth.rating.toFixed(1).split('.')[1] !== '0') {
     stars.push(<Star key={5} />)
   }
+
   return (
     <div className={styles.clothInfo}>
       <div className={styles.clothGalery}>
@@ -60,12 +68,17 @@ export const ClothInfo = ({ cloth, addNotice }) => {
               className={`${styles.imageButton} ${image.isActive ? styles.active : ''}`}
               onClick={() => toggleActiveImage(image.id)}
             >
-              <img src={`src/assets/${image.imageLink}`} alt='' />
+              <img src={`https://192.168.1.37:7001/clothes/image/${image.imageLink}`} alt='' />
             </button>
           ))}
         </div>
         <div className={styles.currentImage}>
-          {<img src={`src/assets/${images.find((image) => image.isActive).imageLink}`} alt='' />}
+          {
+            <img
+              src={`https://192.168.1.37:7001/clothes/image/${images.find((image) => image.isActive).imageLink}`}
+              alt=''
+            />
+          }
         </div>
       </div>
       <div className={styles.cloth}>

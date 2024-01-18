@@ -8,7 +8,6 @@ var connectionString = configuration.GetConnectionString("DefaultConnection");
 
 builder.Services.AddDbContext<AppDbContext>(options => options.UseMySQL(connectionString), ServiceLifetime.Singleton);
 builder.Services.AddTransient<AppDbContext>();
-
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

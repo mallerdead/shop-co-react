@@ -148,6 +148,18 @@
   fill: white;
 }
 
+@media (max-width: 1807px) {
+  .clothes a {
+    width: calc(33.33% - 27px);
+  }
+}
+
+@media (max-width: 1350px) {
+  .clothes a {
+    width: calc(50% - 20px);
+  }
+}
+
 @media (max-width: 960px) {
   .filterMenuButton {
     display: flex;
@@ -213,6 +225,16 @@
     fill-opacity: 1;
     transition: all 0.3s ease;
   }
+
+  .clothes a {
+    width: calc(33.33% - 27px);
+  }
+}
+
+@media (max-width: 728px) {
+  .clothes a {
+    width: calc(50% - 20px);
+  }
 }
 
 @media (max-width: 630px) {
@@ -226,5 +248,9 @@
 
   .sortButton {
     display: none;
+  }
+
+  .clothes a {
+    width: 100%;
   }
 }

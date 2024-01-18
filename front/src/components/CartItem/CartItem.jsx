@@ -11,7 +11,7 @@ export const CartItem = ({ product, productCount, deleteHandler, changeQuantity 
   return (
     <div className={styles.item}>
       <div className={styles.clothPreview}>
-        <img src={`/src/assets/${product.imageURL}`} alt='' />
+        <img src={`https://192.168.1.37:7001/clothes/image/${product.imageURL}`} alt='' />
       </div>
       <div className={styles.description}>
         <button className={styles.deleteButton} onClick={deleteHandler}>

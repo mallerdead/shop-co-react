@@ -10,6 +10,8 @@ namespace shopCO.Data.Models
         public string Email { get; set; }
         public string PasswordHash { get; set; }
         public string? Token { get; set; }
+        public DateTime? TokenExpires { get; set; }
+        public List<Order> Orders { get; set; }
         public Cart Cart { get; set; }
 
         public User() { }

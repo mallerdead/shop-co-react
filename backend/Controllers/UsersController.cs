@@ -18,17 +18,16 @@ namespace shopCO.Controllers
         [HttpGet, Route("user")]
         public async Task<IActionResult> GetUser([FromHeader(Name = "Authorization")] string header)
         {
-            if (!string.IsNullOrEmpty(header) && header.StartsWith("Jwt "))
+            try
             {
-                var user = await DBContext.FindUserByToken(header[4..]);
+                var user = await DBContext.FindUserByToken(header);
 
-                if (user != null)
-                {
-                    return Ok(new UserInfoViewModel(user));
-                }
+                return Ok(new UserInfoViewModel(user));
             }
-
-            return Unauthorized("There is no user with this token");
+            catch (Exception ex)
+            {
+                return Unauthorized(ex.Message);
+            }
         }
 
         [HttpPost, Route("register")]
@@ -37,6 +36,7 @@ namespace shopCO.Controllers
             if (!await DBContext.CheckUserByEMail(registerModel.Email))
             {
                 var token = await DBContext.CreateUser(registerModel, Config);
+
                 return Ok(token);
             }
 
@@ -47,7 +47,42 @@ namespace shopCO.Controllers
         public async Task<IActionResult> Login([FromBody] LoginViewModel loginViewModel)
         {
             string token = await DBContext.UserLogin(loginViewModel, Config);
+
             return token != null ? Ok(token) : NotFound("User does not exist");
+        }
+
+        [HttpPut, Route("user/change/name")]
+        public async Task<IActionResult> ChangeUserName([FromHeader(Name = "Authorization")] string header, [FromBody] string newName)
+        {
+            try
+            {
+                var user = await DBContext.FindUserByToken(header[4..]);
+
+                await DBContext.ChangeUserName(user, newName);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return Unauthorized(ex.Message);
+            }
+        }
+
+        [HttpPut, Route("user/change/email")]
+        public async Task<IActionResult> ChangeUserEmail([FromHeader(Name = "Authorization")] string header, [FromBody] string newEmail)
+        {
+            try
+            {
+                var user = await DBContext.FindUserByToken(header);
+
+                await DBContext.ChangeUserEmail(user, newEmail);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return Unauthorized(ex.Message);
+            }
         }
     }
 }

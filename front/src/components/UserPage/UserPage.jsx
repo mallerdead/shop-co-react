@@ -1,8 +1,8 @@
 import styles from './UserPage.module.css'
-import { AutentificationForm, LoadingSpinner, ModalNotices, UserInfo } from '..'
+import { AutentificationForm, LoadingSpinner, ModalNotices, Orders, UserInfo } from '..'
 import { useEffect, useState } from 'react'
-
-import { getUserInfo } from '/src/api/api'
+import { v4 as uuidv4 } from 'uuid'
+import { getUserInfo, ChangeUserName, ChangeUserEmail } from '/src/api/api'
 
 export const UserPage = () => {
   const [notices, setNotices] = useState([])
@@ -13,8 +13,19 @@ export const UserPage = () => {
   const addNotice = (id, title, description, state) =>
     setNotices((prev) => [...prev, { id, title, description, state }])
 
-  const changeName = (newName) => setUser((prev) => ({ ...prev, name: newName }))
-  const changeEmail = (newEmail) => setUser((prev) => ({ ...prev, email: newEmail }))
+  const changeName = (newName) => {
+    ChangeUserName(newName).then(() => {
+      setUser((prev) => ({ ...prev, login: newName }))
+      addNotice(uuidv4(), 'Name changed', 'Your name has been changed', 'ok')
+    })
+  }
+
+  const changeEmail = (newEmail) => {
+    ChangeUserEmail(newEmail).then(() => {
+      setUser((prev) => ({ ...prev, email: newEmail }))
+      addNotice(uuidv4(), 'Email changed', 'Your email has been changed', 'ok')
+    })
+  }
 
   useEffect(() => {
     setIsLoading(true)
@@ -36,10 +47,15 @@ export const UserPage = () => {
           setUser(response.data)
           setIsLoading(false)
         })
-        .catch(() => {
-          setHasToken(false)
-          document.cookie = 'token=; path=/;'
-          setIsLoading(false)
+        .catch((err) => {
+          if (err.code === 'ERR_NETWORK') {
+            addNotice(uuidv4(), 'Network error', 'Please check your internet connection', 'error')
+          } else if (err.response.status === 401) {
+            addNotice(uuidv4(), 'Aythentication error', err.response.data, 'error')
+            setHasToken(false)
+            document.cookie = 'token=; path=/;'
+            setIsLoading(false)
+          }
         })
     }
   }, [hasToken])
@@ -50,7 +66,10 @@ export const UserPage = () => {
         {isLoading ? (
           <LoadingSpinner />
         ) : hasToken && user ? (
-          <UserInfo user={user} changeName={changeName} changeEmail={changeEmail} />
+          <>
+            <UserInfo user={user} changeName={changeName} changeEmail={changeEmail} setHasToken={setHasToken} />
+            <Orders />
+          </>
         ) : (
           <AutentificationForm setHasToken={setHasToken} setIsLoading={setIsLoading} addNotice={addNotice} />
         )}

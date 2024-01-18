@@ -12,39 +12,50 @@ namespace shopCO.Controllers
         [HttpGet, Route("cart")]
         public async Task<IActionResult> GetCart([FromHeader(Name = "Authorization")] string header)
         {
-            var cart = await DBContext.FindCartProducts(header[4..]);
-            return cart != null ? Ok(cart) : NotFound("Cart not found");
+            try
+            {
+                var user = await DBContext.FindUserByToken(header);
+                var cart = DBContext.FindCartProducts(user);
+                return cart.Count != 0 ? Ok(cart) : NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPost, Route("cart/products/add")]
         public async Task<IActionResult> AddProduct([FromHeader(Name = "Authorization")] string header, [FromBody] ProductViewModel product)
         {
-            if (product != null)
+            try
             {
-                var user = await DBContext.FindUserByToken(header[4..]);
+                var user = await DBContext.FindUserByToken(header);
 
-                if (user != null)
-                {
-                    var isContains = await DBContext.AddCartProductToCart(user, product);
+                var isContains = await DBContext.AddCartProductToCart(user, product);
 
-                    return isContains ? Ok() : CreatedAtAction(nameof(AddProduct), new { id = product.ClothId }, null);
-                }
+                return isContains ? Ok() : CreatedAtAction(nameof(AddProduct), new { id = product.ClothId }, null);
             }
-
-            return BadRequest("Something went wrong");
+            catch (Exception ex)
+            {
+                return Unauthorized(ex.Message);
+            }
         }
         [HttpPost, Route("cart/products/remove")]
         public async Task<IActionResult> RemoveProduct([FromHeader(Name = "Authorization")] string header, [FromBody] ProductViewModel product)
         {
             if (product != null)
             {
-                var user = await DBContext.FindUserByToken(header[4..]);
-
-                if (user != null)
+                try
                 {
+                    var user = await DBContext.FindUserByToken(header);
+
                     await DBContext.RemoveProductFromCart(user, product);
 
                     return Ok();
+                }
+                catch (Exception ex)
+                {
+                    return Unauthorized(ex.Message);
                 }
             }
             return BadRequest();
@@ -54,23 +65,20 @@ namespace shopCO.Controllers
         {
             if (product != null)
             {
-                var user = await DBContext.FindUserByToken(header[4..]);
+                var user = await DBContext.FindUserByToken(header);
 
-                if (user != null)
+                try
                 {
-                    try
-                    {
-                        await DBContext.ChangeCountProduct(user, product);
-                        return Ok();
-                    }
-                    catch (Exception ex)
-                    {
-                        return NotFound(ex.Message);
-                    }
+                    await DBContext.ChangeCountProduct(user, product);
+                    return Ok();
+                }
+                catch (Exception ex)
+                {
+                    return NotFound(ex.Message);
                 }
             }
 
-            return BadRequest("Something went wrong");
+            return BadRequest("There is no such product in the cart");
         }
     }
 }

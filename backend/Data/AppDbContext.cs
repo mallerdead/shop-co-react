@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
 using shopCO.Data.Models;
 using shopCO.Data.Models.Entities;
 using shopCO.JwtTokens;
@@ -17,11 +18,11 @@ namespace shopCO.Data
         public virtual DbSet<Cart> Carts { get; set; }
         public virtual DbSet<CartProduct> CartProducts { get; set; }
         public virtual DbSet<ClothType> ClothTypes { get; set; }
+        public virtual DbSet<Order> Orders { get; set; }
+        public virtual DbSet<OrderProduct> OrderProducts { get; set; }
 
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
-        {
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
-        }
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -72,6 +73,19 @@ namespace shopCO.Data
 
                 entity.ToTable("users");
             });
+            modelBuilder.Entity<Order>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+                entity.ToTable("orders");
+            });
+
+            modelBuilder.Entity<OrderProduct>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+                entity.ToTable("orderproducts");
+            });
             OnModelCreatingPartial(modelBuilder);
         }
 
@@ -112,35 +126,43 @@ namespace shopCO.Data
 
             Carts.Add(new Cart(newUser.Id));
 
-            var token = JwtTokensManager.GenerateToken(newUser.Id, config);
-            newUser.Token = token;
+            JwtTokensManager.GenerateToken(newUser, config);
             await SaveChangesAsync();
 
-            return token;
+            return newUser.Token;
         }
 
-        public async Task<User> FindUserByToken(string token)
+        public async Task<User> FindUserByToken(string header)
         {
-            var user = await Users
+            if (JwtTokensManager.TokenIsValid(header))
+            {
+                var token = header[4..];
+
+                var user = await Users
                 .Include(user => user.Cart.Products).ThenInclude(product => product.Cloth)
                 .Include(user => user.Cart.Products).ThenInclude(product => product.Color)
                 .Include(user => user.Cart.Products).ThenInclude(product => product.Size)
+                .Include(user => user.Orders).ThenInclude(product => product.Products)
                 .FirstOrDefaultAsync(user => user.Token != null && user.Token == token);
 
-            return user;
+                if (user != null)
+                {
+                    if (user.TokenExpires.Value < DateTime.Now)
+                    {
+                        throw new Exception("Token has expired");
+                    }
+                    return user;
+                }
+                throw new Exception("There is no user with this token");
+            }
+            throw new Exception("Token is not valid");
         }
 
-        public async Task<List<CartProductDTO>> FindCartProducts(string token)
+        public  List<CartProductDTO> FindCartProducts(User user)
         {
-            var user = await FindUserByToken(token);
+            var products = user.Cart.Products.ConvertAll(product => new CartProductDTO(product));
 
-            if (user != null)
-            {
-                var products = user.Cart.Products.ConvertAll(product => new CartProductDTO(product));
-                return products;
-            }
-
-            return null;
+            return products;
         }
 
         public async Task<bool> AddCartProductToCart(User user, ProductViewModel newProduct)
@@ -173,6 +195,19 @@ namespace shopCO.Data
             }
         }
 
+        public async Task ChangeUserName(User user, string newName)
+        {
+            user.Login = newName;
+            await SaveChangesAsync();
+        }
+
+        public async Task ChangeUserEmail(User user, string newEmail)
+        {
+            user.Email = newEmail ;
+            await SaveChangesAsync();
+        }
+
+
         public async Task ChangeCountProduct(User user, ProductViewModel productViewModel)
         {
             var product = user.Cart.Products.Find(product => product.ClothId == productViewModel.ClothId && product.SizeId == productViewModel.SizeId && product.ColorId == productViewModel.ColorId);
@@ -196,7 +231,7 @@ namespace shopCO.Data
 
             if (user != null && PasswordHasher.CheckHashedPassword(loginViewModel.Password, user.PasswordHash))
             {
-                user.Token = JwtTokensManager.GenerateToken(user.Id, config);
+                JwtTokensManager.GenerateToken(user, config);
                 await SaveChangesAsync();
 
                 return user.Token;
@@ -204,10 +239,48 @@ namespace shopCO.Data
 
             return null;
         }
+        public async Task<List<ClothDTO>> GetTopSellingClothes(int count)
+        {
+            var result = new List<ClothDTO>();
+            var topSellingClothes = await Clothes
+                .Include(cloth => cloth.ClothType)
+                .Include(cloth => cloth.ClothColors).ThenInclude(clothColor => clothColor.Color)
+                .Include(cloth => cloth.ClothSizes).ThenInclude(clothSize => clothSize.Size)
+                .OrderByDescending(cloth => cloth.QuantitySold)
+                .Select(cloth => new ClothDTO(cloth))
+                .ToListAsync();
+
+            for (int i = 0; i < count && i < topSellingClothes.Count; i++)
+            {
+                result.Add(topSellingClothes[i]);
+            }
+
+            return result;
+        }
+
+        public async Task<List<ClothDTO>> GetNewArrivalsClothes(int count)
+        {
+            var result = new List<ClothDTO>();
+            var topSellingClothes = await Clothes
+                .Include(cloth => cloth.ClothType)
+                .Include(cloth => cloth.ClothColors).ThenInclude(clothColor => clothColor.Color)
+                .Include(cloth => cloth.ClothSizes).ThenInclude(clothSize => clothSize.Size)
+                .OrderByDescending(cloth => cloth.DateAdded)
+                .Select(cloth => new ClothDTO(cloth))
+                .ToListAsync();
+
+            for (int i = 0; i < count && i < topSellingClothes.Count; i++)
+            {
+                result.Add(topSellingClothes[i]);
+            }
+
+            return result;
+        }
 
         public async Task<bool> CheckUserByEMail(string Email)
         {
             var user = await Users.FirstOrDefaultAsync(user => user.Email == Email);
+
             return user != null;
         }
     }

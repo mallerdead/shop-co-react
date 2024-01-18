@@ -28,6 +28,7 @@ export const AutentificationForm = ({ setHasToken, setIsLoading, addNotice }) =>
 
   const signUpSubmit = (e) => {
     e.preventDefault()
+
     register(signUpData)
       .then((token) => {
         document.cookie = `token=${token}; path=/;`
@@ -35,7 +36,9 @@ export const AutentificationForm = ({ setHasToken, setIsLoading, addNotice }) =>
         setHasToken(true)
       })
       .catch((err) => {
-        if (err.response.status === 409) {
+        if (err.code === 'ERR_NETWORK') {
+          addNotice(uuidv4(), 'Network error', 'Please check your internet connection', 'error')
+        } else if (err.response.status === 409) {
           addNotice(uuidv4(), 'Error', err.response.data, 'error')
         } else {
           console.error(err)
@@ -44,6 +47,7 @@ export const AutentificationForm = ({ setHasToken, setIsLoading, addNotice }) =>
   }
   const singInSubmit = (e) => {
     e.preventDefault()
+
     login(signInData)
       .then((token) => {
         document.cookie = `token=${token}; path=/;`
@@ -51,10 +55,11 @@ export const AutentificationForm = ({ setHasToken, setIsLoading, addNotice }) =>
         addNotice(uuidv4(), 'Successfully authorized', 'You have successfully logged in to your account', 'ok')
       })
       .catch((err) => {
-        if (err.response.status === 404) {
+        if (err.code === 'ERR_NETWORK') {
+          addNotice(uuidv4(), 'Network error', 'Please check your internet connection', 'error')
+        } else if (err.response.status === 404) {
           addNotice(uuidv4(), 'Error', err.response.data, 'error')
         } else {
-          console.error(err)
         }
       })
   }
@@ -87,7 +92,7 @@ export const AutentificationForm = ({ setHasToken, setIsLoading, addNotice }) =>
             onChange={changeLoginSingUp}
             required
           />
-          <label for='login-sign-up' className={`${styles.inputText} ${signUpData.login ? styles.active : ''}`}>
+          <label htmlFor='login-sign-up' className={`${styles.inputText} ${signUpData.login ? styles.active : ''}`}>
             Login
           </label>
         </div>
@@ -100,7 +105,7 @@ export const AutentificationForm = ({ setHasToken, setIsLoading, addNotice }) =>
             onChange={changeEmailSingUp}
             required
           />
-          <label for='email-sign-up' className={`${styles.inputText} ${signUpData.email ? styles.active : ''}`}>
+          <label htmlFor='email-sign-up' className={`${styles.inputText} ${signUpData.email ? styles.active : ''}`}>
             Email Address
           </label>
         </div>
@@ -113,7 +118,10 @@ export const AutentificationForm = ({ setHasToken, setIsLoading, addNotice }) =>
             onChange={changePasswordSingUp}
             required
           />
-          <label for='password-sign-up' className={`${styles.inputText} ${signUpData.password ? styles.active : ''}`}>
+          <label
+            htmlFor='password-sign-up'
+            className={`${styles.inputText} ${signUpData.password ? styles.active : ''}`}
+          >
             Password
           </label>
           <button className={styles.showHidePassword} type='button' onClick={toggleShowPassword}>
@@ -135,7 +143,7 @@ export const AutentificationForm = ({ setHasToken, setIsLoading, addNotice }) =>
             onChange={changeLoginSingIn}
             required
           />
-          <label for='login-sign-in' className={`${styles.inputText} ${signInData.login ? styles.active : ''}`}>
+          <label htmlFor='login-sign-in' className={`${styles.inputText} ${signInData.login ? styles.active : ''}`}>
             Login or Email
           </label>
         </div>
@@ -148,7 +156,10 @@ export const AutentificationForm = ({ setHasToken, setIsLoading, addNotice }) =>
             onChange={changePasswordSingIn}
             required
           />
-          <label for='password-sign-in' className={`${styles.inputText} ${signInData.password ? styles.active : ''}`}>
+          <label
+            htmlFor='password-sign-in'
+            className={`${styles.inputText} ${signInData.password ? styles.active : ''}`}
+          >
             Password
           </label>
           <button className={styles.showHidePassword} type='button' onClick={toggleShowPassword}>

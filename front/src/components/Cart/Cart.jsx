@@ -1,4 +1,4 @@
-import { useEffect, useState, Fragment } from 'react'
+import { useEffect, useState } from 'react'
 import { getCart, removeProductFromCart, changeCountInCart } from '../../api/api'
 import { LoadingSpinner, CartItem, ModalNotices } from '..'
 import { v4 as uuidv4 } from 'uuid'
@@ -8,6 +8,7 @@ export const Cart = () => {
   const [notices, setNotices] = useState([])
   const [cartItems, setCartItems] = useState([])
   const [isLoading, setIsLoading] = useState(true)
+  const [unAuthorized, setUnAuthorized] = useState(false)
 
   const addNotice = (id, title, description, state) =>
     setNotices((prev) => [...prev, { id, title, description, state }])
@@ -48,10 +49,27 @@ export const Cart = () => {
   useEffect(() => {
     setIsLoading(true)
     getCart()
-      .then((data) => {
-        setCartItems(data)
+      .then((response) => {
+        if (response.status === 200) {
+          setCartItems(response.data)
+          setIsLoading(false)
+        } else if (response.status == 204) {
+          addNotice(uuidv4(), 'Empty cart', 'Your cart is empty', 'ok')
+          setIsLoading(false)
+        }
       })
-      .then(() => setIsLoading(false))
+      .catch((error) => {
+        if (error.code === 'ERR_NETWORK') {
+          addNotice(uuidv4(), 'Network error', 'Please check your internet connection', 'error')
+          setIsLoading(false)
+        } else if (error.response.status === 401) {
+          addNotice(uuidv4(), 'Not authorized', error.response.data, 'error')
+          setUnAuthorized(true)
+          setIsLoading(false)
+        } else {
+          addNotice(uuidv4(), 'Error', 'Something went wrong', 'error')
+        }
+      })
   }, [])
 
   return (
@@ -63,18 +81,23 @@ export const Cart = () => {
           <div className={styles.items}>
             {isLoading ? (
               <LoadingSpinner />
+            ) : unAuthorized ? (
+              <div className={styles.userUnauthorized}>
+                <h4>Not authorized</h4>
+                <img src='/src/assets/user.svg' alt='' />
+                <a href='/user'>Login</a>
+              </div>
             ) : cartItems.length ? (
-              cartItems.map((product, index) => (
-                <Fragment key={product.id}>
-                  <CartItem
-                    product={product}
-                    productCount={product.count}
-                    deleteHandler={() => deleteCartItem(product.id)}
-                    changeQuantity={changeQuantity}
-                  />
-                  {index !== cartItems.length - 1 && <div className={styles.delimiter}></div>}
-                </Fragment>
-              ))
+              cartItems.map((product, index) => [
+                <CartItem
+                  key={product.id}
+                  product={product}
+                  productCount={product.count}
+                  deleteHandler={() => deleteCartItem(product.id)}
+                  changeQuantity={changeQuantity}
+                />,
+                index !== cartItems.length - 1 && <div key={`delimiter-${index}`} className={styles.delimiter}></div>,
+              ])
             ) : (
               <div className={styles.cartEmpty}>
                 <h4>Cart is empty</h4>

@@ -11,7 +11,7 @@ export const ClothItem = ({ cloth }) => {
   return (
     <a href={`cloth?id=${cloth.id}`} className={styles.item}>
       <div className={styles.clothPreview}>
-        <img src={`/src/assets/${cloth.imageURL}`} alt={`${cloth.imageLink} preview`} />
+        <img src={`https://192.168.1.37:7001/clothes/image/${cloth.imageURL}`} alt={`${cloth.imageURL} preview`} />
       </div>
       <div className={styles.name}>{cloth.name}</div>
       <div className={styles.rating}>

@@ -32,5 +32,47 @@ namespace shopCO.Controllers
 
             return NotFound();
         }
+
+        [HttpGet, Route("clothes/top-selling")]
+        public async Task<IActionResult> GetTopSelling()
+        {
+            const int countClothes = 4;
+
+            var topSellingClothes = await DBContext.GetTopSellingClothes(countClothes);
+
+            if (topSellingClothes != null)
+            {
+                return Ok(topSellingClothes);
+            }
+
+            return BadRequest();
+        }
+        [HttpGet, Route("clothes/new-arrivals")]
+        public async Task<IActionResult> GetNewArrivals()
+        {
+            const int countClothes = 4;
+
+            var topSellingClothes = await DBContext.GetNewArrivalsClothes(countClothes);
+
+            if (topSellingClothes != null)
+            {
+                return Ok(topSellingClothes);
+            }
+
+            return BadRequest();
+        }
+
+        [HttpGet, Route("clothes/image/{imageName}")]
+        public IActionResult GetImage(string imageName)
+        {
+            string imagePath = Path.Combine(@"images\clothes\", imageName);
+            if (System.IO.File.Exists(imagePath))
+            {
+                byte[] imageBytes = System.IO.File.ReadAllBytes(imagePath);
+                string contentType = "image/png";
+                return File(imageBytes, contentType);
+            }
+            return NotFound();
+        }
     }
 }
