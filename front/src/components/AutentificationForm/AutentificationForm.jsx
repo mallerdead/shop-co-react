@@ -1,35 +1,50 @@
-import { useState } from 'react'
+import { useReducer, useState } from 'react'
 import { register, login } from '/src/api/api'
 import styles from './AutentificationForm.module.css'
 import { v4 as uuidv4 } from 'uuid'
 
-export const AutentificationForm = ({ setHasToken, setIsLoading, addNotice }) => {
+export const AutentificationForm = ({ setHasToken, addNotice }) => {
   const [isSignUpActive, setSignUpActive] = useState(true)
   const [isShowPassword, setIsShowPassword] = useState(false)
 
-  const [signUpData, setSignUpData] = useState({
-    login: '',
-    email: '',
-    password: '',
-  })
-  const [signInData, setSignInData] = useState({
-    login: '',
-    password: '',
-  })
+  const [registerData, dispatchRegister] = useReducer(registerReducer, { login: '', email: '', password: '' })
+  const [loginData, dispatchLogin] = useReducer(loginReducer, { login: '', password: '' })
 
-  const changeLoginSingUp = (e) => setSignUpData((prev) => ({ ...prev, login: e.target.value }))
-  const changeEmailSingUp = (e) => setSignUpData((prev) => ({ ...prev, email: e.target.value }))
-  const changePasswordSingUp = (e) => setSignUpData((prev) => ({ ...prev, password: e.target.value }))
+  const registerReducer = (state, action) => {
+    switch (action.type) {
+      case 'login':
+        return { ...state, login: action.payload }
+      case 'email':
+        return { ...state, email: action.payload }
+      case 'password':
+        return { ...state, password: action.payload }
+      default:
+        throw new Error()
+    }
+  }
+  const loginReducer = (state, action) => {
+    switch (action.type) {
+      case 'login':
+        return { ...state, login: action.payload }
+      case 'password':
+        return { ...state, password: action.payload }
+    }
+  }
 
-  const changeLoginSingIn = (e) => setSignInData((prev) => ({ ...prev, login: e.target.value }))
-  const changePasswordSingIn = (e) => setSignInData((prev) => ({ ...prev, password: e.target.value }))
+  const changeLoginSingUp = (e) => dispatchRegister({ type: 'login', payload: e.target.value })
+  const changeEmailSingUp = (e) => dispatchRegister({ type: 'email', payload: e.target.value })
+  const changePasswordSingUp = (e) => dispatchRegister({ type: 'password', payload: e.target.value })
+
+  const changeLoginSingIn = (e) => dispatchLogin({ type: 'login', payload: e.target.value })
+  const changePasswordSingIn = (e) => dispatchLogin({ type: 'password', payload: e.target.value })
 
   const toggleShowPassword = () => setIsShowPassword((prev) => !prev)
 
   const signUpSubmit = (e) => {
     e.preventDefault()
 
-    register(signUpData)
+    register(registerData)
+      .then((response) => response.data)
       .then((token) => {
         document.cookie = `token=${token}; path=/;`
         addNotice(uuidv4(), 'Successfully registered', 'You have successfully registered', 'ok')
@@ -48,7 +63,8 @@ export const AutentificationForm = ({ setHasToken, setIsLoading, addNotice }) =>
   const singInSubmit = (e) => {
     e.preventDefault()
 
-    login(signInData)
+    login(loginData)
+      .then((response) => response.data)
       .then((token) => {
         document.cookie = `token=${token}; path=/;`
         setHasToken(true)
@@ -59,7 +75,6 @@ export const AutentificationForm = ({ setHasToken, setIsLoading, addNotice }) =>
           addNotice(uuidv4(), 'Network error', 'Please check your internet connection', 'error')
         } else if (err.response.status === 404) {
           addNotice(uuidv4(), 'Error', err.response.data, 'error')
-        } else {
         }
       })
   }
@@ -88,11 +103,11 @@ export const AutentificationForm = ({ setHasToken, setIsLoading, addNotice }) =>
             id='login-sign-up'
             className={styles.formInput}
             type='text'
-            value={signUpData.login}
+            value={registerData.login}
             onChange={changeLoginSingUp}
             required
           />
-          <label htmlFor='login-sign-up' className={`${styles.inputText} ${signUpData.login ? styles.active : ''}`}>
+          <label htmlFor='login-sign-up' className={`${styles.inputText} ${registerData.login ? styles.active : ''}`}>
             Login
           </label>
         </div>
@@ -101,11 +116,11 @@ export const AutentificationForm = ({ setHasToken, setIsLoading, addNotice }) =>
             id='email-sign-up'
             className={styles.formInput}
             type='email'
-            value={signUpData.email}
+            value={registerData.email}
             onChange={changeEmailSingUp}
             required
           />
-          <label htmlFor='email-sign-up' className={`${styles.inputText} ${signUpData.email ? styles.active : ''}`}>
+          <label htmlFor='email-sign-up' className={`${styles.inputText} ${registerData.email ? styles.active : ''}`}>
             Email Address
           </label>
         </div>
@@ -114,13 +129,13 @@ export const AutentificationForm = ({ setHasToken, setIsLoading, addNotice }) =>
             id='password-sign-up'
             className={styles.formInput}
             type={isShowPassword ? 'text' : 'password'}
-            value={signUpData.password}
+            value={registerData.password}
             onChange={changePasswordSingUp}
             required
           />
           <label
             htmlFor='password-sign-up'
-            className={`${styles.inputText} ${signUpData.password ? styles.active : ''}`}
+            className={`${styles.inputText} ${registerData.password ? styles.active : ''}`}
           >
             Password
           </label>
@@ -139,11 +154,11 @@ export const AutentificationForm = ({ setHasToken, setIsLoading, addNotice }) =>
             id='login-sign-in'
             className={styles.formInput}
             type='text'
-            value={signInData.login}
+            value={loginData.login}
             onChange={changeLoginSingIn}
             required
           />
-          <label htmlFor='login-sign-in' className={`${styles.inputText} ${signInData.login ? styles.active : ''}`}>
+          <label htmlFor='login-sign-in' className={`${styles.inputText} ${loginData.login ? styles.active : ''}`}>
             Login or Email
           </label>
         </div>
@@ -152,13 +167,13 @@ export const AutentificationForm = ({ setHasToken, setIsLoading, addNotice }) =>
             id='password-sign-in'
             className={styles.formInput}
             type={isShowPassword ? 'text' : 'password'}
-            value={signInData.password}
+            value={loginData.password}
             onChange={changePasswordSingIn}
             required
           />
           <label
             htmlFor='password-sign-in'
-            className={`${styles.inputText} ${signInData.password ? styles.active : ''}`}
+            className={`${styles.inputText} ${loginData.password ? styles.active : ''}`}
           >
             Password
           </label>

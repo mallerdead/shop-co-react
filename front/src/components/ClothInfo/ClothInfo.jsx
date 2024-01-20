@@ -1,5 +1,5 @@
 import styles from './ClothInfo.module.css'
-import { Star, Color, Size } from '..'
+import { Stars, Color, Size } from '..'
 import { addCartProductToCart } from '../../api/api'
 import { useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
@@ -52,12 +52,6 @@ export const ClothInfo = ({ cloth, addNotice }) => {
       })
   }
 
-  const rating = new Array(Math.floor(cloth.rating)).fill(null)
-  const stars = rating.map((e, index) => <Star key={index} isFull />)
-  if (cloth.rating.toFixed(1).split('.')[1] !== '0') {
-    stars.push(<Star key={5} />)
-  }
-
   return (
     <div className={styles.clothInfo}>
       <div className={styles.clothGalery}>
@@ -84,7 +78,9 @@ export const ClothInfo = ({ cloth, addNotice }) => {
       <div className={styles.cloth}>
         <div className={styles.name}>{cloth.name}</div>
         <div className={styles.rating}>
-          <div className={styles.stars}>{stars}</div>
+          <div className={styles.stars}>
+            <Stars rating={cloth.rating} />
+          </div>
           <div className={styles.ratingNumber}>
             {cloth.rating}/<span className={styles.maxRating}>5</span>
           </div>

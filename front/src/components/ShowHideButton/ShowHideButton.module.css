@@ -1,38 +1,37 @@
 .showHideButton {
-    position: relative;
-    width: 20px;
-    height: 20px;
-    transform: rotate(180deg);
-    transition: all 0.5s ease;
+  position: relative;
+  width: 20px;
+  height: 20px;
+  transform: rotate(180deg);
+  transition: all 0.5s ease;
 }
 
 .showHideButton.active {
-    transform: rotate(0deg);
+  transform: rotate(0deg);
 }
 
 .showHideButton.active::after,
 .showHideButton.active::before {
-    background-color: black
+  background-color: black;
 }
 
 .showHideButton::after {
-    transform: rotate(45deg);
-    right: 0;
+  transform: rotate(45deg);
+  right: 0;
 }
 
 .showHideButton::before {
-    transform: rotate(-45deg);
-    left: 0;
+  transform: rotate(-45deg);
+  left: 0;
 }
-
 
 .showHideButton::after,
 .showHideButton::before {
-    position: absolute;
-    content: '';
-    width: 12.5px;
-    height: 2px;
-    background-color: #444444;
-    border-radius: 2px;
-    top: 50%
+  position: absolute;
+  content: '';
+  width: 12.5px;
+  height: 2px;
+  background-color: #444444;
+  border-radius: 2px;
+  top: 50%;
 }

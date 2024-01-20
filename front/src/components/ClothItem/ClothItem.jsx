@@ -1,13 +1,7 @@
 import styles from './ClothItem.module.css'
-import { Star } from '..'
+import { Stars } from '..'
 
 export const ClothItem = ({ cloth }) => {
-  const rating = new Array(Math.floor(cloth.rating)).fill(null)
-  const stars = rating.map((e, index) => <Star key={index} isFull />)
-  if (cloth.rating.toFixed(1).split('.')[1] !== '0') {
-    stars.push(<Star key={5} />)
-  }
-
   return (
     <a href={`cloth?id=${cloth.id}`} className={styles.item}>
       <div className={styles.clothPreview}>
@@ -15,7 +9,9 @@ export const ClothItem = ({ cloth }) => {
       </div>
       <div className={styles.name}>{cloth.name}</div>
       <div className={styles.rating}>
-        <div className={styles.stars}>{stars}</div>
+        <div className={styles.stars}>
+          <Stars rating={cloth.rating} />
+        </div>
         <div className={styles.ratingNumber}>{cloth.rating}/5</div>
       </div>
       <div className={styles.fullPrice}>

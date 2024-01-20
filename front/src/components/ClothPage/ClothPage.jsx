@@ -18,10 +18,14 @@ export const ClothPage = () => {
   useEffect(() => {
     setIsLoading(true)
     const url = new URL(window.location.href)
-    getClothesById(+url.searchParams.get('id')).then((cloth) => {
-      setCloth(cloth)
-      setIsLoading(false)
-    })
+    const id = +url.searchParams.get('id')
+
+    getClothesById(id)
+      .then((response) => response.data)
+      .then((cloth) => {
+        setCloth(cloth)
+        setIsLoading(false)
+      })
   }, [])
 
   return (

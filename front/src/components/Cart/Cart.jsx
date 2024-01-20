@@ -27,6 +27,10 @@ export const Cart = () => {
     })
   }
 
+  const createOrder = () => {
+    console.log(cartItems)
+  }
+
   const changeQuantity = (id, newQuantity) => {
     if (newQuantity < 1) {
       newQuantity = 1
@@ -148,7 +152,14 @@ export const Cart = () => {
 
               <button>Apply</button>
             </div>
-            <button className={styles.checkout}>Go to Checkout</button>
+            <button
+              className={styles.checkout}
+              onClick={() => {
+                createOrder()
+              }}
+            >
+              Go to Checkout
+            </button>
           </div>
         </div>
       </div>
