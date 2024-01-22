@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
-import { getCart, removeProductFromCart, changeCountInCart } from '../../api/api'
+import { getCart, removeProductFromCart, changeCountInCart } from '../../api/cart'
+import { createNewOrder } from '../../api/order'
 import { LoadingSpinner, CartItem, ModalNotices } from '..'
 import { v4 as uuidv4 } from 'uuid'
 import styles from './Cart.module.css'
@@ -28,7 +29,7 @@ export const Cart = () => {
   }
 
   const createOrder = () => {
-    console.log(cartItems)
+    createNewOrder(cartItems).then(console.log)
   }
 
   const changeQuantity = (id, newQuantity) => {

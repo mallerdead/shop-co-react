@@ -4,6 +4,7 @@ using shopCO.Data.Models;
 using shopCO.Data.Models.Entities;
 using shopCO.JwtTokens;
 using shopCO.PasswordHashing;
+using System.Linq;
 
 namespace shopCO.Data
 {
@@ -156,6 +157,17 @@ namespace shopCO.Data
                 throw new Exception("There is no user with this token");
             }
             throw new Exception("Token is not valid");
+        }
+
+        public async Task CreateOrder(User user, CreateOrderViewModel newOrder)
+        {
+            user.Orders.Add(new Order(newOrder, user.Id));
+            await SaveChangesAsync();
+            foreach (var product in newOrder.Products)
+            {
+                OrderProducts.Add(new OrderProduct(product, user.Orders[user.Orders.Count - 1].Id));
+            }
+            await SaveChangesAsync();
         }
 
         public  List<CartProductDTO> FindCartProducts(User user)

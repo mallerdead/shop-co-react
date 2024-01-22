@@ -1,7 +1,7 @@
 import styles from './Shop.module.css'
 import { useEffect, useState } from 'react'
 import { ClothItem, PriceSlider, Color, Size, FilterItem, ShowHideButton, Pagination, LoadingSpinner } from '..'
-import { getClothes } from '/src/api/api'
+import { getClothes } from '../../api/clothes'
 
 export const Shop = () => {
   const [filterMenu, setFilterMenu] = useState(false)

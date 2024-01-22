@@ -9,6 +9,7 @@ namespace shopCO.Data.Models
         public Cloth Cloth { get; set; }
         public Color Color { get; set; }
         public Size Size { get; set; }
+
         public OrderProductDTO(OrderProduct product)
         {
             Count = product.Count;

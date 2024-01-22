@@ -1,14 +1,11 @@
 import { useReducer, useState } from 'react'
-import { register, login } from '/src/api/api'
+import { register, login } from '../../api/user'
 import styles from './AutentificationForm.module.css'
 import { v4 as uuidv4 } from 'uuid'
 
 export const AutentificationForm = ({ setHasToken, addNotice }) => {
   const [isSignUpActive, setSignUpActive] = useState(true)
   const [isShowPassword, setIsShowPassword] = useState(false)
-
-  const [registerData, dispatchRegister] = useReducer(registerReducer, { login: '', email: '', password: '' })
-  const [loginData, dispatchLogin] = useReducer(loginReducer, { login: '', password: '' })
 
   const registerReducer = (state, action) => {
     switch (action.type) {
@@ -30,6 +27,9 @@ export const AutentificationForm = ({ setHasToken, addNotice }) => {
         return { ...state, password: action.payload }
     }
   }
+
+  const [registerData, dispatchRegister] = useReducer(registerReducer, { login: '', email: '', password: '' })
+  const [loginData, dispatchLogin] = useReducer(loginReducer, { login: '', password: '' })
 
   const changeLoginSingUp = (e) => dispatchRegister({ type: 'login', payload: e.target.value })
   const changeEmailSingUp = (e) => dispatchRegister({ type: 'email', payload: e.target.value })

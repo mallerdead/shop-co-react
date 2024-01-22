@@ -56,7 +56,7 @@ namespace shopCO.Controllers
         {
             try
             {
-                var user = await DBContext.FindUserByToken(header[4..]);
+                var user = await DBContext.FindUserByToken(header);
 
                 await DBContext.ChangeUserName(user, newName);
 

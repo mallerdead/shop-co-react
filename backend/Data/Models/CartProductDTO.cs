@@ -1,5 +1,4 @@
-﻿using System.Security.Cryptography.X509Certificates;
-using shopCO.Data.Models.Entities;
+﻿using shopCO.Data.Models.Entities;
 
 namespace shopCO.Data.Models
 {

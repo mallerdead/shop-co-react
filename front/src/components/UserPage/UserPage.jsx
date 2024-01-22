@@ -2,7 +2,7 @@ import styles from './UserPage.module.css'
 import { AutentificationForm, LoadingSpinner, ModalNotices, Orders, UserInfo } from '..'
 import { useEffect, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
-import { getUserInfo, ChangeUserName, ChangeUserEmail } from '/src/api/api'
+import { getUserInfo, ChangeUserName, ChangeUserEmail } from '../../api/user'
 
 export const UserPage = () => {
   const [notices, setNotices] = useState([])

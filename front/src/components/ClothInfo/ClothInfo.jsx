@@ -1,6 +1,6 @@
 import styles from './ClothInfo.module.css'
 import { Stars, Color, Size } from '..'
-import { addCartProductToCart } from '../../api/api'
+import { addCartProductToCart } from '../../api/cart'
 import { useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 

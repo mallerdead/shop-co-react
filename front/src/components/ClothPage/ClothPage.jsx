@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react'
-import { getClothesById } from '/src/api/api'
 import styles from './ClothPage.module.css'
+import { useEffect, useState } from 'react'
+import { getClothesById } from '../../api/clothes'
 import { LoadingSpinner, ClothInfo, ModalNotices } from '..'
 
 export const ClothPage = () => {

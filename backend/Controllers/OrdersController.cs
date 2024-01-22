@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using shopCO.Data.Models;
 using shopCO.Data;
-using shopCO.Data.Models.Entities;
+using shopCO.Data.Models;
 
 namespace shopCO.Controllers
 {
@@ -10,17 +9,19 @@ namespace shopCO.Controllers
         private readonly AppDbContext DBContext;
         public OrdersController(AppDbContext DBContext) => this.DBContext = DBContext;
 
-        [HttpGet, Route("order")]
-        public async Task<IActionResult> Order()
+        [HttpPost, Route("order/create")]
+        public async Task<IActionResult> CreateOrder([FromHeader(Name = "Authorization")] string header, [FromBody] CreateOrderViewModel newOrder )
         {
-            var user = await DBContext.FindUserByToken("Jwt eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2IiwiZXhwIjoxNzA1Njg4NzczLCJpc3MiOiJzaG9wQ09TZXJ2ZXIiLCJhdWQiOiJzaG9wQ09DbGllbnQifQ.1pYRCNbRD-_NYXfX_rXKfuP755e7Ub2gdYpKxLYPHsM");
-            return Ok(user);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> CreateOrder([FromHeader(Name = "Authorization")] string header, [FromBody] )
-        {
-            return Ok();
+            try
+            {
+                var user = await DBContext.FindUserByToken(header);
+                await DBContext.CreateOrder(user, newOrder);
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return Unauthorized(ex.Message);
+            }
         }
     }
 }

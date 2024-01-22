@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { getTopSelling, getNewArrivals } from '/src/api/api'
+import { getTopSelling, getNewArrivals } from '../../api/clothes'
 import { ClothItem, Comment, LoadingSpinner } from '..'
 import styles from './Home.module.css'
 
@@ -32,14 +32,14 @@ export const Home = () => {
 
   useEffect(() => {
     setNewArrivalsLoading(true)
-    getNewArrivals().then((data) => {
-      setNewArrivals(data)
+    getNewArrivals().then((response) => {
+      setNewArrivals(response.data)
       setNewArrivalsLoading(false)
     })
 
     setLoadingTopSelling(true)
-    getTopSelling().then((data) => {
-      setTopSelling(data)
+    getTopSelling().then((response) => {
+      setTopSelling(response.data)
       setLoadingTopSelling(false)
     })
   }, [])

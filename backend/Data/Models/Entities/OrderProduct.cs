@@ -11,5 +11,16 @@
         public Cloth Cloth { get; set; }
         public Size Size { get; set; }
         public Color Color { get; set; }
+
+        public OrderProduct() { }
+
+        public OrderProduct(NewOrderProduct newProduct, int orderId)
+        {
+            ClothId = newProduct.ClothId;
+            SizeId = newProduct.SizeId;
+            ColorId = newProduct.ColorId;
+            Count = newProduct.Count;
+            OrderId = orderId;
+        }
     }
 }
