@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\maller\\Desktop\\react\\backend\\shopCO.csproj": {}
+    "C:\\Users\\maller\\Desktop\\shop\\backend\\shopCO.csproj": {}
   },
   "projects": {
-    "C:\\Users\\maller\\Desktop\\react\\backend\\shopCO.csproj": {
+    "C:\\Users\\maller\\Desktop\\shop\\backend\\shopCO.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\maller\\Desktop\\react\\backend\\shopCO.csproj",
+        "projectUniqueName": "C:\\Users\\maller\\Desktop\\shop\\backend\\shopCO.csproj",
         "projectName": "shopCO",
-        "projectPath": "C:\\Users\\maller\\Desktop\\react\\backend\\shopCO.csproj",
+        "projectPath": "C:\\Users\\maller\\Desktop\\shop\\backend\\shopCO.csproj",
         "packagesPath": "C:\\Users\\maller\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\maller\\Desktop\\react\\backend\\obj\\",
+        "outputPath": "C:\\Users\\maller\\Desktop\\shop\\backend\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
